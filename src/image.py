@@ -11,6 +11,7 @@ from openai import OpenAI
 from src.config import Settings
 
 MODEL_IMAGE = "muse-image-1.0"
+IMAGE_TIMEOUT = 90
 
 
 def build_ficha_prompt(planeacion_md: str) -> str:
@@ -57,6 +58,7 @@ def generate_ficha(
             }
         ],
         tools=[{"type": "image_generation"}],
+        timeout=IMAGE_TIMEOUT,
     )
     b64 = extract_image_b64(resp.output)
     if not b64:
