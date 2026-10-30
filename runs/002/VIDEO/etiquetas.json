@@ -1,0 +1,109 @@
+{
+  "etiquetas": [
+    {
+      "id": "FOTO-mat",
+      "categoria": "material_foto",
+      "descripcion_libre": "tapete de foami (mat)",
+      "n_instancias": 1,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "FOTO-wooden_blocks",
+      "categoria": "material_foto",
+      "descripcion_libre": "bloques de madera (wooden blocks)",
+      "n_instancias": 20,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "FOTO-sensory_balls",
+      "categoria": "material_foto",
+      "descripcion_libre": "pelotas sensoriales en canasta (sensory balls in basket)",
+      "n_instancias": 2,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "FOTO-fabric_books",
+      "categoria": "material_foto",
+      "descripcion_libre": "libros de tela (fabric books)",
+      "n_instancias": 0,
+      "visible_en_foto": false,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "FOTO-low_shelf",
+      "categoria": "material_foto",
+      "descripcion_libre": "estante bajo de madera (low wooden shelf)",
+      "n_instancias": 2,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "FOTO-white_trays",
+      "categoria": "material_foto",
+      "descripcion_libre": "bandejas blancas (white trays)",
+      "n_instancias": 5,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real"
+    },
+    {
+      "id": "VOZ-01",
+      "categoria": "material_voz",
+      "descripcion_libre": "tapete de foami multicolor",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "muse-voice-transcribe-1.0",
+      "estado": "real"
+    },
+    {
+      "id": "VOZ-02",
+      "categoria": "material_voz",
+      "descripcion_libre": "bloques de madera de colores",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "muse-voice-transcribe-1.0",
+      "estado": "real"
+    },
+    {
+      "id": "VOZ-03",
+      "categoria": "material_voz",
+      "descripcion_libre": "canasta de pelotas suaves",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "muse-voice-transcribe-1.0",
+      "estado": "real"
+    },
+    {
+      "id": "VOZ-NEG-01",
+      "categoria": "material_voz_negado",
+      "descripcion_libre": "libros infantiles de tela",
+      "n_instancias": 0,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "muse-voice-transcribe-1.0",
+      "estado": "real",
+      "negacion": true,
+      "nota": "negacion en voz ('no tengo...'): conservada sin categoria, no disponible para planificar (3.2)"
+    }
+  ],
+  "foto_origen": "salon.jpg real (Flow validada, sin personas)",
+  "voz_origen": "nota_humana.m4a voz real humana consentida",
+  "nota_fusion": "Sin fusion foto+voz por texto: no hay IoU entre modalidades ni confirmacion de educadora; procedencias se conservan separadas. Negaciones conservadas sin categoria."
+}

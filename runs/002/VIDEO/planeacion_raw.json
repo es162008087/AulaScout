@@ -1,0 +1,51 @@
+{
+  "modelo_efectivo": "muse-spark-1.3",
+  "max_tokens": 3500,
+  "temperature": 0.0,
+  "timeout_s": 60,
+  "max_retries": 0,
+  "estado": "real",
+  "finish_reason": "stop",
+  "tiempo_s": 11.62,
+  "prompt_chars": 1275,
+  "respuesta_chars": 2724,
+  "validador": {
+    "n_actividades": 21,
+    "n_seguridad": 3,
+    "tiene_edad_18_36": true,
+    "tiene_piezas_pequenas": true,
+    "valido": true
+  },
+  "intentos": [
+    {
+      "intento": 1,
+      "finish_reason": "length",
+      "respuesta_chars": 0,
+      "validador": {
+        "n_actividades": 0,
+        "n_seguridad": 0,
+        "tiene_edad_18_36": false,
+        "tiene_piezas_pequenas": false,
+        "valido": false
+      },
+      "tiempo_s": 12.41,
+      "estado": "fallo"
+    },
+    {
+      "intento": 2,
+      "finish_reason": "stop",
+      "respuesta_chars": 2724,
+      "validador": {
+        "n_actividades": 21,
+        "n_seguridad": 3,
+        "tiene_edad_18_36": true,
+        "tiene_piezas_pequenas": true,
+        "valido": true
+      },
+      "tiempo_s": 11.62,
+      "estado": "real"
+    }
+  ],
+  "prompt": "Eres educadora SEP de maternal (lactantes y maternal, 18 a 36 meses). Con estos materiales detectados en el salon:\n- [FOTO-mat] tapete de foami (procedencia: foto)\n- [FOTO-wooden_blocks] bloques de madera (procedencia: foto)\n- [FOTO-sensory_balls] pelotas sensoriales en canasta (procedencia: foto)\n- [FOTO-fabric_books] libros de tela (procedencia: foto)\n- [FOTO-low_shelf] estante bajo de madera (procedencia: foto)\n- [FOTO-white_trays] bandejas blancas (procedencia: foto)\n- [VOZ-01] tapete de foami multicolor (procedencia: voz)\n- [VOZ-02] bloques de madera de colores (procedencia: voz)\n- [VOZ-03] canasta de pelotas suaves (procedencia: voz)\n- [VOZ-NEG-01] libros infantiles de tela (procedencia: voz)\n\nGenera una planeacion didactica en markdown con EXACTAMENTE 3 actividades de 20 minutos cada una, para edad 18-36 meses. Cada actividad DEBE tener estas 6 secciones con estos titulos exactos: Titulo, Edad, Objetivo, Materiales, Pasos, Seguridad. En Edad escribe siempre el rango 18-36 meses. En Seguridad incluye la regla de piezas pequenas (no usar piezas pequenas que quepan en la boca) y adaptacion de seguridad propia de la actividad. Cita los materiales por su [ID] tal como aparecen arriba. Responde SOLO con la planeacion markdown, sin introduccion ni cierre.",
+  "respuesta": "## Actividad 1\n### Titulo\nApilo y derribo en tapete - 20 minutos\n### Edad\n18-36 meses\n### Objetivo\nFavorecer motricidad gruesa y coordinación ojo-mano mediante apilar y derribar bloques grandes.\n### Materiales\n- [FOTO-mat] tapete de foami\n- [VOZ-01] tapete de foami multicolor\n- [FOTO-wooden_blocks] bloques de madera\n- [VOZ-02] bloques de madera de colores\n### Pasos\n1. Inicio 5 minutos: Sentar a los niños sobre el tapete y presentar los bloques con modelado de apilar.\n2. Desarrollo 10 minutos: Cada niño apila 2 a 4 bloques a su ritmo y los derriba con la mano, repitiendo la acción.\n3. Cierre 5 minutos: Recoger juntos los bloques y aplaudir el derribo final.\n### Seguridad\nNo usar piezas pequeñas que quepan en la boca, usar solo bloques grandes. Adaptación propia: realizar la actividad sentados sobre el tapete para amortiguar caídas y mantener supervisión uno a uno al derribar.\n## Actividad 2\n### Titulo\nRueda y descubre pelotas - 20 minutos\n### Edad\n18-36 meses\n### Objetivo\nEstimular percepción táctil y seguimiento visual mediante rodar, atrapar y apretar pelotas suaves.\n### Materiales\n- [FOTO-sensory_balls] pelotas sensoriales en canasta\n- [VOZ-03] canasta de pelotas suaves\n- [FOTO-mat] tapete de foami\n- [VOZ-01] tapete de foami multicolor\n### Pasos\n1. Inicio 5 minutos: Sentados en círculo sobre el tapete, tocar y apretar las pelotas de la canasta.\n2. Desarrollo 10 minutos: Rodar la pelota al educador y viceversa, nombrar suave y rodar.\n3. Cierre 5 minutos: Guardar cada pelota en la canasta y despedirla con un apretón.\n### Seguridad\nNo usar piezas pequeñas que quepan en la boca, usar solo pelotas grandes que no se desarmen. Adaptación propia: mantener el área despejada sobre el tapete y rodar sentados para evitar choques al gatear o caminar.\n## Actividad 3\n### Titulo\nExploro libros de tela - 20 minutos\n### Edad\n18-36 meses\n### Objetivo\nFavorecer lenguaje y exploración sensorial mediante manipulación libre de libros de tela y señalamiento de imágenes.\n### Materiales\n- [FOTO-fabric_books] libros de tela\n- [FOTO-low_shelf] estante bajo de madera\n- [FOTO-white_trays] bandejas blancas\n- [FOTO-mat] tapete de foami\n### Pasos\n1. Inicio 5 minutos: Presentar en bandejas sobre el tapete los libros tomados del estante bajo.\n2. Desarrollo 10 minutos: Cada niño hojea, toca texturas y señala, la educadora nombra imágenes con frases cortas.\n3. Cierre 5 minutos: Colocar los libros de regreso en las bandejas y luego en el estante bajo con ayuda.\n### Seguridad\nNo usar piezas pequeñas que quepan en la boca, verificar que los libros no tengan botones desprendibles. Adaptación propia: usar bandejas sin filos y mantener los libros a la altura del estante bajo para evitar que los niños trepen o jalen."
+}
