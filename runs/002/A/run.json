@@ -1,0 +1,70 @@
+{
+  "etapa": "A",
+  "run": "002",
+  "fecha_utc": "2026-10-29T16:40:05.752012+00:00",
+  "foto": "salon.jpg (Flow validada, 1024x765)",
+  "llamadas": 8,
+  "llamadas_detalle": [
+    "tapete de foami (ES) x2 -> 0/0 genuino",
+    "foam mat x1 -> 0/0",
+    "sonda full-dump tapete ES x1 -> texto '' status=completed",
+    "shelf x1 -> 4 cajas + 4 mascaras (verificacion overlay)",
+    "play mat x1 -> 0/0",
+    "mat x1 -> 1 caja + 1 mascara (presente positivo)",
+    "piano x1 -> 0/0 (control ausente OK)"
+  ],
+  "reintentos": 0,
+  "max_retries": 0,
+  "out_tocado": false,
+  "fallback_usado": false,
+  "desviacion_concepto": "Concepto ordenado 'tapete de foami' (ES) da 0 genuino (verificado: status=completed, texto vacio, con y sin metadata). SAM 3.1 aqui es sensible a idioma/redaccion: 'mat' (EN) sobre el mismo objeto da 1 caja + 1 mascara. Presente-positivo = 'mat'.",
+  "tapete_es": {
+    "concepto": "tapete de foami",
+    "modelo_efectivo": "sam-3.1",
+    "max_retries": 0,
+    "estado": "real",
+    "n_cajas": 0,
+    "n_mascaras": 0,
+    "tiempo_s": 1.41,
+    "n_eventos_delta": 0,
+    "final_status": "status=completed",
+    "final_chars": 0,
+    "fuente": "deltas"
+  },
+  "mat_en": {
+    "concepto": "mat",
+    "modelo_efectivo": "sam-3.1",
+    "max_retries": 0,
+    "estado": "real",
+    "n_cajas": 1,
+    "n_mascaras": 1,
+    "tiempo_s": 2.76,
+    "n_eventos_delta": 1,
+    "final_status": "status=completed",
+    "final_chars": 21076,
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "fuente": "deltas"
+  },
+  "piano": {
+    "concepto": "piano",
+    "modelo_efectivo": "sam-3.1",
+    "max_retries": 0,
+    "estado": "real",
+    "n_cajas": 0,
+    "n_mascaras": 0,
+    "n_eventos_delta": 0,
+    "tiempo_s": 1.2
+  },
+  "overlay_tapete": "tapete_overlay.png",
+  "overlay_mascaras_ok": true,
+  "diagnosticos": [
+    "diag_foam_raw.json",
+    "diag_mat_raw.json",
+    "diag_playmat_raw.json",
+    "diag_shelf_raw.json"
+  ]
+}

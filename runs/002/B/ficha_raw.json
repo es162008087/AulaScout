@@ -1,0 +1,18 @@
+{
+  "modelo_efectivo": "muse-image-1.0",
+  "timeout_s": 90,
+  "max_retries": 0,
+  "intento": 2,
+  "estado": "real",
+  "archivo": "ficha.webp",
+  "formato_magic": "webp",
+  "bytes": 310002,
+  "titulos": [
+    "Mis pelotas suaves",
+    "Torres de colores",
+    "Cuentitos de tela"
+  ],
+  "tiempo_s": 11.36,
+  "v1_conservada": "ficha_v1.webp (titulos inventados por Image)",
+  "prompt": "Ficha visual infantil para aula de maternal, estilo plano y alegre, dividida en 3 paneles horizontales, uno por actividad, cada panel con su titulo exacto y una ilustracion alusiva (sin texto largo, sin logos, sin siglas SEP, sin marcas de agua). Panel 1 titulo: 'Mis pelotas suaves' (bebes jugando con pelotas suaves de colores sobre tapete). Panel 2 titulo: 'Torres de colores' (ninos apilando bloques de madera de colores). Panel 3 titulo: 'Cuentitos de tela' (educadora mostrando un libro de tela a bebes sentados)."
+}

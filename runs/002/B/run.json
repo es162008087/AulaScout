@@ -1,0 +1,257 @@
+{
+  "etapa": "B",
+  "run": "002",
+  "fecha_utc": "2026-10-30T06:05:00.980646+00:00",
+  "foto": "salon.jpg (Flow validada, 1024x765)",
+  "latencia_total_s_n1": 30.13,
+  "llamadas_nuevas": 14,
+  "llamadas_sam": 7,
+  "llamadas_spark": 5,
+  "llamadas_image": 2,
+  "llamadas_voice": 0,
+  "reintentos": 0,
+  "max_retries": 0,
+  "out_tocado": false,
+  "fallback_usado": false,
+  "sam_abortado_429_5xx": false,
+  "sam": {
+    "mat": {
+      "concepto": "mat",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 1,
+      "n_mascaras": 1,
+      "tiempo_s": 1.3,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 21032,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "mat_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "wooden_blocks": {
+      "concepto": "wooden blocks",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 20,
+      "n_mascaras": 20,
+      "tiempo_s": 0.56,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7174,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "wooden_blocks_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "sensory_balls": {
+      "concepto": "sensory balls in basket",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 3.1,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7496,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "sensory_balls_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "fabric_books": {
+      "concepto": "fabric books",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 0,
+      "n_mascaras": 0,
+      "tiempo_s": 1.4,
+      "n_eventos_delta": 0,
+      "final_status": "status=completed",
+      "final_chars": 0,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "alternativa_probada": "cloth books",
+      "alternativa_resultado": "0 cajas, 0 mascaras",
+      "overlay": null,
+      "overlay_mascaras_ok": null
+    },
+    "low_shelf": {
+      "concepto": "low wooden shelf",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 1.64,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 33869,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "low_shelf_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "white_trays": {
+      "concepto": "white trays",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 5,
+      "n_mascaras": 5,
+      "tiempo_s": 1.04,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 8145,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "white_trays_overlay.png",
+      "overlay_mascaras_ok": true
+    }
+  },
+  "voice": {
+    "estado": "demo",
+    "origen_modelo": "espeak-sintetico",
+    "transcripcion": "DEMO: Tengo tapete de foami, bloques de madera de colores, canasta con pelotas sensoriales y libros de tela",
+    "materiales": [
+      "tapete de foami multicolor",
+      "bloques de madera de colores",
+      "canasta de pelotas suaves",
+      "libros infantiles de tela"
+    ],
+    "nota": "pendiente audio humano consentido 5-7s con negacion para video final",
+    "llamadas": 0,
+    "tiempo_s": 0.0
+  },
+  "spark": {
+    "modelo_efectivo": "muse-spark-1.3",
+    "max_tokens": 6000,
+    "timeout_s": 60,
+    "max_retries": 0,
+    "intento": 5,
+    "finish_reason": "stop",
+    "tiempo_s": 9.73,
+    "prompt_chars": 1416,
+    "respuesta_chars": 1482,
+    "usage": {
+      "completion_tokens": 3721,
+      "prompt_tokens": 410,
+      "total_tokens": 4131,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 3271,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 369,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    "estado": "real",
+    "validador": {
+      "n_actividades": 3,
+      "n_seguridad": 3,
+      "tiene_edad_18_36": true,
+      "tiene_piezas_pequenas": true,
+      "valido": true
+    }
+  },
+  "image": {
+    "modelo_efectivo": "muse-image-1.0",
+    "timeout_s": 90,
+    "max_retries": 0,
+    "intento": 2,
+    "estado": "real",
+    "archivo": "ficha.webp",
+    "formato_magic": "webp",
+    "bytes": 310002,
+    "titulos": [
+      "Mis pelotas suaves",
+      "Torres de colores",
+      "Cuentitos de tela"
+    ],
+    "tiempo_s": 11.36,
+    "v1_conservada": "ficha_v1.webp (titulos inventados por Image)"
+  },
+  "desvios": [
+    "Voice sin llamada API: espeak-sintetico marcado demo (autorizado).",
+    "No se repitio piano (control A OK).",
+    "Spark max_tokens 2500->6000 (usage intento4: reasoning_tokens=2276 de 2500, sin espacio para texto; intentos 1-4 truncados como evidencia, intento5 stop OK). Total B real: 13 llamadas nuevas (7 SAM + 5 Spark + 1 Image + 0 Voice), dentro de $10. Acumulado A+B: 21 llamadas.",
+    "Image v1 con titulos inventados (extractor tomo headings, no **Titulo:**) -> conservada como ficha_v1; v2 con los 3 titulos reales del plan. Total B real: 14 llamadas nuevas, dentro de $10."
+  ],
+  "spark_intentos_fallidos": [
+    {
+      "modelo_efectivo": "muse-spark-1.3",
+      "max_tokens": 2500,
+      "timeout_s": 60,
+      "max_retries": 0,
+      "intento": 4,
+      "finish_reason": "length",
+      "tiempo_s": 6.41,
+      "prompt_chars": 1416,
+      "respuesta_chars": 717,
+      "usage": {
+        "completion_tokens": 2500,
+        "prompt_tokens": 410,
+        "total_tokens": 2910,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2276,
+          "rejected_prediction_tokens": null,
+          "text_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cache_write_tokens": null,
+          "cached_tokens": 369,
+          "image_tokens": null,
+          "text_tokens": null
+        }
+      },
+      "estado": "fallo",
+      "error": "finish=length chars=717 (intento 4)"
+    }
+  ],
+  "latencia_nota": "Suma cadena exitosa (SAM + Spark intento 5 + Image v2).",
+  "llamadas_detalle": [
+    "SAM x7: 6 conceptos EN + 1 alt (cloth books) -> 30 cajas / 30 mascaras",
+    "Spark x5: intento1 length 2875ch / intento2 length 0ch / intento3 length 0ch / intento4 length 717ch (usage: reasoning 2276/2500) / intento5 stop 1482ch OK con max_tokens 6000",
+    "Image x1: ficha.webp 216940B magic=webp",
+    "Voice x0: demo espeak-sintetico marcado, sin llamada"
+  ]
+}

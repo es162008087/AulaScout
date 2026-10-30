@@ -159,6 +159,81 @@ def test_transcribir_audio_fallback_demo(monkeypatch, tmp_path):
     assert voice_mod.transcribir_audio(audio, settings) == DEMO_TRANSCRIPTION
 
 
+def test_transcribir_audio_manda_request_y_audio_wav(monkeypatch, tmp_path):
+    import json as json_mod
+
+    import src.voice as voice_mod
+
+    captured = {}
+
+    class FakeResp:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"text": "tapete y bloques"}
+
+    def fake_post(url, **kwargs):
+        captured.update(kwargs)
+        assert url == voice_mod.VOICE_URL
+        return FakeResp()
+
+    wav = tmp_path / "nota_16k.wav"
+    wav.write_bytes(b"RIFF-fake-wav")
+    monkeypatch.setattr(voice_mod, "convertir_a_wav_16k", lambda src, dest: wav)
+    monkeypatch.setattr(voice_mod.requests, "post", fake_post)
+    audio = tmp_path / "nota.m4a"
+    audio.write_bytes(b"fake-audio")
+    settings = SimpleNamespace(base_url="https://x", api_key="k", timeout_s=5)
+    assert voice_mod.transcribir_audio(audio, settings) == "tapete y bloques"
+
+    files = captured["files"]
+    assert set(files) == {"request", "audio"}
+    assert files["request"][0] is None
+    assert files["request"][1] == json_mod.dumps(
+        {"model": voice_mod.MODEL_VOICE, "language": "es", "audioEncoding": "WAV"}
+    )
+    assert files["request"][2] == "application/json"
+    assert files["audio"][0] == "nota_16k.wav"
+    assert files["audio"][2] == "audio/wav"
+    assert "data" not in captured
+
+
+def test_convertir_a_wav_16k_genera_pcm_mono(tmp_path):
+    import shutil
+    import subprocess
+
+    import src.voice as voice_mod
+
+    if shutil.which("ffmpeg") is None or shutil.which("ffprobe") is None:
+        pytest.skip("requiere ffmpeg/ffprobe")
+    src = tmp_path / "orig.m4a"
+    subprocess.run(
+        [
+            "ffmpeg", "-y", "-v", "error", "-f", "lavfi",
+            "-i", "sine=frequency=440:duration=0.5", "-c:a", "aac", str(src),
+        ],
+        check=True,
+        timeout=60,
+    )
+    wav = voice_mod.convertir_a_wav_16k(src, tmp_path)
+    assert wav.name == "orig_16k.wav"
+    probe = subprocess.run(
+        [
+            "ffprobe", "-v", "error", "-show_entries",
+            "stream=codec_name,sample_rate,channels",
+            "-of", "default=noprint_wrappers=1", str(wav),
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+        timeout=60,
+    )
+    assert "codec_name=pcm_s16le" in probe.stdout
+    assert "sample_rate=16000" in probe.stdout
+    assert "channels=1" in probe.stdout
+
+
 def test_sam_reintenta_con_backoff(monkeypatch, tmp_path):
     import src.sam as sam_mod
 

@@ -1,0 +1,12 @@
+{
+  "concepto": "piano",
+  "modelo_efectivo": "sam-3.1",
+  "max_retries": 0,
+  "estado": "real",
+  "n_cajas": 0,
+  "n_mascaras": 0,
+  "n_eventos_delta": 0,
+  "tiempo_s": 1.2,
+  "records": [],
+  "raw_sanitizado": ""
+}

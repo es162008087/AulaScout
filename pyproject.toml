@@ -1,0 +1,27 @@
+[project]
+name = "meta-planeaciones"
+version = "0.1.0"
+description = "Hackathon Meta Global AI 2026 - planeaciones didacticas lactantes/maternal"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0",
+    "requests>=2.31",
+    "python-dotenv>=1.0",
+    "meta-sam-parser>=0.1.0",
+    "pillow>=12.3.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "tests*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
