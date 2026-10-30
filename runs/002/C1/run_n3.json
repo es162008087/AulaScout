@@ -1,0 +1,191 @@
+{
+  "etapa": "C1",
+  "run": "002",
+  "iteracion": 3,
+  "fecha_utc": "2026-10-30T06:38:25.032439+00:00",
+  "foto": "salon.jpg (Flow validada, 1024x765)",
+  "sam_t_s": 5.81,
+  "spark_t_s": 9.7,
+  "image_t_s": 11.03,
+  "latencia_total_s": 29.28,
+  "llamadas_sam": 7,
+  "llamadas_spark": 1,
+  "llamadas_image": 1,
+  "llamadas_voice": 0,
+  "llamadas_nuevas": 9,
+  "max_retries": 0,
+  "out_tocado": false,
+  "fallback_usado": false,
+  "sam": {
+    "mat": {
+      "concepto": "mat",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 1,
+      "n_mascaras": 1,
+      "tiempo_s": 1.62,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 21059,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas"
+    },
+    "wooden_blocks": {
+      "concepto": "wooden blocks",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 20,
+      "n_mascaras": 20,
+      "tiempo_s": 0.77,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7202,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas"
+    },
+    "sensory_balls": {
+      "concepto": "sensory balls in basket",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 0.8,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7496,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas"
+    },
+    "fabric_books": {
+      "concepto": "fabric books",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 0,
+      "n_mascaras": 0,
+      "tiempo_s": 0.99,
+      "n_eventos_delta": 0,
+      "final_status": "status=completed",
+      "final_chars": 0,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "alternativa_probada": "cloth books",
+      "alternativa_resultado": "0 cajas, 0 mascaras"
+    },
+    "low_shelf": {
+      "concepto": "low wooden shelf",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 0.78,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 33708,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas"
+    },
+    "white_trays": {
+      "concepto": "white trays",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 5,
+      "n_mascaras": 5,
+      "tiempo_s": 0.85,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 8145,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas"
+    }
+  },
+  "voice": {
+    "estado": "demo",
+    "origen_modelo": "espeak-sintetico",
+    "llamadas": 0,
+    "tiempo_s": 0.0
+  },
+  "spark": {
+    "modelo_efectivo": "muse-spark-1.3",
+    "max_tokens": 3500,
+    "timeout_s": 60,
+    "max_retries": 0,
+    "finish_reason": "stop",
+    "tiempo_s": 9.7,
+    "prompt_chars": 1490,
+    "respuesta_chars": 1072,
+    "usage": {
+      "completion_tokens": 3228,
+      "prompt_tokens": 430,
+      "total_tokens": 3658,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2877,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 369,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    },
+    "estado": "real",
+    "validador": {
+      "n_actividades": 3,
+      "n_seguridad": 3,
+      "tiene_edad_18_36": true,
+      "tiene_piezas_pequenas": true,
+      "valido": true
+    }
+  },
+  "image": {
+    "modelo_efectivo": "muse-image-1.0",
+    "timeout_s": 90,
+    "max_retries": 0,
+    "estado": "real",
+    "archivo": "ficha_run3.png",
+    "formato_magic": "png",
+    "formato_origen": "webp",
+    "bytes": 969596,
+    "titulos": [
+      "Torres de colores (20 minutos)",
+      "Pelotas suaves al cesto (20 minutos)",
+      "Cuentos de tela (20 minutos)"
+    ],
+    "tiempo_s": 11.03,
+    "sin_sep": true
+  }
+}

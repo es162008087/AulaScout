@@ -1,0 +1,16 @@
+{
+  "etapa": "C1",
+  "n": 3,
+  "latencias_s": [
+    28.72,
+    29.28,
+    38.93
+  ],
+  "p50_s": 29.28,
+  "p90_s": 37.91,
+  "media_s": 32.31,
+  "min_s": 28.72,
+  "max_s": 38.93,
+  "llamadas_nuevas_total": 27,
+  "nota": "p50=mediana n=3; p90=interpolacion lineal min-max (n=3, aprox). Cadena por corrida = SAM+Spark+Image (Voice demo 0s)."
+}

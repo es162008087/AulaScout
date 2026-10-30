@@ -1,0 +1,18 @@
+{
+  "modelo_efectivo": "muse-image-1.0",
+  "timeout_s": 90,
+  "max_retries": 0,
+  "estado": "real",
+  "archivo": "ficha_run1.png",
+  "formato_magic": "png",
+  "formato_origen": "webp",
+  "bytes": 1384183,
+  "titulos": [
+    "Torres de colores (20 minutos)",
+    "Pelotas suaves al cesto (20 minutos)",
+    "Cuentos de tela (20 minutos)"
+  ],
+  "tiempo_s": 9.93,
+  "sin_sep": true,
+  "prompt": "Ficha visual infantil para aula de maternal, estilo plano y alegre, dividida en 3 paneles horizontales, uno por actividad, cada panel con su titulo exacto y una ilustracion alusiva (sin texto largo, sin logos, sin siglas SEP, sin marcas de agua). Panel 1 titulo: 'Torres de colores (20 minutos)'. Panel 2 titulo: 'Pelotas suaves al cesto (20 minutos)'. Panel 3 titulo: 'Cuentos de tela (20 minutos)'."
+}
