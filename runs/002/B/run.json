@@ -1,13 +1,13 @@
 {
   "etapa": "B",
   "run": "002",
-  "fecha_utc": "2026-10-30T06:05:00.980646+00:00",
+  "fecha_utc": "2026-10-30T06:17:59.705614+00:00",
   "foto": "salon.jpg (Flow validada, 1024x765)",
-  "latencia_total_s_n1": 30.13,
-  "llamadas_nuevas": 14,
+  "latencia_total_s_n1": 27.28,
+  "llamadas_nuevas": 20,
   "llamadas_sam": 7,
-  "llamadas_spark": 5,
-  "llamadas_image": 2,
+  "llamadas_spark": 10,
+  "llamadas_image": 3,
   "llamadas_voice": 0,
   "reintentos": 0,
   "max_retries": 0,
@@ -154,22 +154,21 @@
   },
   "spark": {
     "modelo_efectivo": "muse-spark-1.3",
-    "max_tokens": 6000,
+    "max_tokens": 3500,
     "timeout_s": 60,
     "max_retries": 0,
-    "intento": 5,
     "finish_reason": "stop",
-    "tiempo_s": 9.73,
-    "prompt_chars": 1416,
-    "respuesta_chars": 1482,
+    "tiempo_s": 8.65,
+    "prompt_chars": 1490,
+    "respuesta_chars": 1072,
     "usage": {
-      "completion_tokens": 3721,
-      "prompt_tokens": 410,
-      "total_tokens": 4131,
+      "completion_tokens": 3123,
+      "prompt_tokens": 430,
+      "total_tokens": 3553,
       "completion_tokens_details": {
         "accepted_prediction_tokens": null,
         "audio_tokens": null,
-        "reasoning_tokens": 3271,
+        "reasoning_tokens": 2772,
         "rejected_prediction_tokens": null,
         "text_tokens": null
       },
@@ -194,24 +193,25 @@
     "modelo_efectivo": "muse-image-1.0",
     "timeout_s": 90,
     "max_retries": 0,
-    "intento": 2,
     "estado": "real",
-    "archivo": "ficha.webp",
-    "formato_magic": "webp",
-    "bytes": 310002,
+    "archivo": "ficha.png",
+    "formato_magic": "png",
+    "formato_origen": "webp",
+    "bytes": 1319685,
     "titulos": [
-      "Mis pelotas suaves",
-      "Torres de colores",
-      "Cuentitos de tela"
+      "Torres de colores (20 minutos)",
+      "Pelotas suaves al cesto (20 minutos)",
+      "Cuentos de tela (20 minutos)"
     ],
-    "tiempo_s": 11.36,
-    "v1_conservada": "ficha_v1.webp (titulos inventados por Image)"
+    "tiempo_s": 9.59,
+    "intento": 3
   },
   "desvios": [
     "Voice sin llamada API: espeak-sintetico marcado demo (autorizado).",
     "No se repitio piano (control A OK).",
     "Spark max_tokens 2500->6000 (usage intento4: reasoning_tokens=2276 de 2500, sin espacio para texto; intentos 1-4 truncados como evidencia, intento5 stop OK). Total B real: 13 llamadas nuevas (7 SAM + 5 Spark + 1 Image + 0 Voice), dentro de $10. Acumulado A+B: 21 llamadas.",
-    "Image v1 con titulos inventados (extractor tomo headings, no **Titulo:**) -> conservada como ficha_v1; v2 con los 3 titulos reales del plan. Total B real: 14 llamadas nuevas, dentro de $10."
+    "Image v1 con titulos inventados (extractor tomo headings, no **Titulo:**) -> conservada como ficha_v1; v2 con los 3 titulos reales del plan. Total B real: 14 llamadas nuevas, dentro de $10.",
+    "Reintento SOLO Spark+Image con max_tokens 3500 (orden): 4 Spark fallidos (length/414ch reasoning 3355; stop/1186ch pero regex de titulos no matcheo formato sin **; length/0ch; length/1079ch) + 1 exito temp=0 stop/1072ch reasoning 2772. SAM intacto (7 llamadas, mismos conteos). Total B: 20 llamadas nuevas (7 SAM + 10 Spark + 3 Image + 0 Voice)."
   ],
   "spark_intentos_fallidos": [
     {
@@ -247,11 +247,13 @@
       "error": "finish=length chars=717 (intento 4)"
     }
   ],
-  "latencia_nota": "Suma cadena exitosa (SAM + Spark intento 5 + Image v2).",
+  "latencia_nota": "Suma cadena exitosa (SAM 9.04s + Spark 3500 8.65s + Image 9.59s). Reintento solo Spark+Image, SAM intacto.",
   "llamadas_detalle": [
     "SAM x7: 6 conceptos EN + 1 alt (cloth books) -> 30 cajas / 30 mascaras",
     "Spark x5: intento1 length 2875ch / intento2 length 0ch / intento3 length 0ch / intento4 length 717ch (usage: reasoning 2276/2500) / intento5 stop 1482ch OK con max_tokens 6000",
     "Image x1: ficha.webp 216940B magic=webp",
-    "Voice x0: demo espeak-sintetico marcado, sin llamada"
+    "Voice x0: demo espeak-sintetico marcado, sin llamada",
+    "Reintento3500 Spark x5: 4 length/stop-no-valido + 1 stop 1072ch OK temp=0 (reasoning 2772/3500)",
+    "Reintento Image x1: ficha.png 1319685B magic=png (origen webp convertido con PIL)"
   ]
 }

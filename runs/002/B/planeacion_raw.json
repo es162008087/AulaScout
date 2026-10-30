@@ -1,21 +1,20 @@
 {
   "modelo_efectivo": "muse-spark-1.3",
-  "max_tokens": 6000,
+  "max_tokens": 3500,
   "timeout_s": 60,
   "max_retries": 0,
-  "intento": 5,
   "finish_reason": "stop",
-  "tiempo_s": 9.73,
-  "prompt_chars": 1416,
-  "respuesta_chars": 1482,
+  "tiempo_s": 8.65,
+  "prompt_chars": 1490,
+  "respuesta_chars": 1072,
   "usage": {
-    "completion_tokens": 3721,
-    "prompt_tokens": 410,
-    "total_tokens": 4131,
+    "completion_tokens": 3123,
+    "prompt_tokens": 430,
+    "total_tokens": 3553,
     "completion_tokens_details": {
       "accepted_prediction_tokens": null,
       "audio_tokens": null,
-      "reasoning_tokens": 3271,
+      "reasoning_tokens": 2772,
       "rejected_prediction_tokens": null,
       "text_tokens": null
     },
@@ -35,6 +34,6 @@
     "tiene_piezas_pequenas": true,
     "valido": true
   },
-  "prompt": "Eres educadora SEP de maternal (lactantes y maternal, 18 a 36 meses). Con estos materiales detectados en el salon:\n- [FOTO-mat] tapete de foami (procedencia: foto)\n- [FOTO-wooden_blocks] bloques de madera (procedencia: foto)\n- [FOTO-sensory_balls] pelotas sensoriales en canasta (procedencia: foto)\n- [FOTO-fabric_books] libros de tela (procedencia: foto)\n- [FOTO-low_shelf] estante bajo de madera (procedencia: foto)\n- [FOTO-white_trays] bandejas blancas (procedencia: foto)\n- [VOZ-01] tapete de foami multicolor (procedencia: voz)\n- [VOZ-02] bloques de madera de colores (procedencia: voz)\n- [VOZ-03] canasta de pelotas suaves (procedencia: voz)\n- [VOZ-04] libros infantiles de tela (procedencia: voz)\n\nGenera una planeacion didactica en markdown con EXACTAMENTE 3 actividades de 20 minutos cada una, para edad 18-36 meses. Cada actividad DEBE tener estas 6 secciones con estos titulos exactos: Titulo, Edad, Objetivo, Materiales, Pasos, Seguridad. En Edad escribe siempre el rango 18-36 meses. En Seguridad incluye la regla de piezas pequenas (no usar piezas pequenas que quepan en la boca) y adaptacion de seguridad propia de la actividad. Cita los materiales por su [ID] tal como aparecen arriba. Responde SOLO con la planeacion markdown, sin introduccion ni cierre. Se conciso: max 120 palabras por actividad, 4 pasos max, Seguridad en 2 frases con regla de piezas pequenas. Cierra las 3 actividades completas.",
-  "respuesta": "## Actividad 1 (20 minutos)\n**Titulo:** Mis pelotas suaves\n**Edad:** 18-36 meses\n**Objetivo:** Estimular tacto y motricidad gruesa mediante manipulación de pelotas.\n**Materiales:** [FOTO-mat], [FOTO-sensory_balls], [VOZ-01], [VOZ-03]\n**Pasos:** 1. Sentar a bebés en tapete. 2. Ofrecer pelotas para tocar, rodar y lanzar. 3. Nombrar colores y texturas mientras juegan.\n**Seguridad:** No usar piezas pequeñas que quepan en la boca. Mantener tapete seco y despejado para evitar caídas.\n## Actividad 2 (20 minutos)\n**Titulo:** Torres de colores\n**Edad:** 18-36 meses\n**Objetivo:** Favorecer motricidad fina y coordinación ojo-mano apilando bloques.\n**Materiales:** [FOTO-wooden_blocks], [FOTO-low_shelf], [FOTO-white_trays], [VOZ-02]\n**Pasos:** 1. Presentar bloques en bandejas a altura baja. 2. Demostrar apilar y derribar. 3. Dejar exploración libre imitando acciones.\n**Seguridad:** No usar piezas pequeñas que quepan en la boca. Supervisar apilado sentado para evitar golpes con bloques.\n## Actividad 3 (20 minutos)\n**Titulo:** Cuentitos de tela\n**Edad:** 18-36 meses\n**Objetivo:** Promover lenguaje y vínculo afectivo mediante lectura sensorial de cuentos.\n**Materiales:** [FOTO-fabric_books], [FOTO-mat], [VOZ-04], [VOZ-01]\n**Pasos:** 1. Sentar en círculo sobre tapete. 2. Mostrar libro de tela página por página. 3. Invitar a tocar, señalar y balbucear.\n**Seguridad:** No usar piezas pequeñas que quepan en la boca. Revisar libros lavados y sin hilos sueltos para chupado seguro."
+  "prompt": "Eres educadora SEP de maternal (lactantes y maternal, 18 a 36 meses). Con estos materiales detectados en el salon:\n- [FOTO-mat] tapete de foami (procedencia: foto)\n- [FOTO-wooden_blocks] bloques de madera (procedencia: foto)\n- [FOTO-sensory_balls] pelotas sensoriales en canasta (procedencia: foto)\n- [FOTO-fabric_books] libros de tela (procedencia: foto)\n- [FOTO-low_shelf] estante bajo de madera (procedencia: foto)\n- [FOTO-white_trays] bandejas blancas (procedencia: foto)\n- [VOZ-01] tapete de foami multicolor (procedencia: voz)\n- [VOZ-02] bloques de madera de colores (procedencia: voz)\n- [VOZ-03] canasta de pelotas suaves (procedencia: voz)\n- [VOZ-04] libros infantiles de tela (procedencia: voz)\n\nGenera una planeacion didactica en markdown con EXACTAMENTE 3 actividades de 20 minutos cada una, para edad 18-36 meses. Cada actividad DEBE tener estas 6 secciones con estos titulos exactos: Titulo, Edad, Objetivo, Materiales, Pasos, Seguridad. En Edad escribe siempre el rango 18-36 meses. En Seguridad incluye la regla de piezas pequenas (no usar piezas pequenas que quepan en la boca) y adaptacion de seguridad propia de la actividad. Cita los materiales por su [ID] tal como aparecen arriba. Responde SOLO con la planeacion markdown, sin introduccion ni cierre. RESUMEN CORTO: max 80 palabras por actividad, max 3 pasos por actividad, Seguridad en 2 frases cortas incluyendo la regla de piezas pequenas. Sin introduccion ni cierre. Cierra las 3 actividades completas, sin truncar.",
+  "respuesta": "## Actividad 1\nTitulo: Torres de colores (20 minutos)\nEdad: 18-36 meses\nObjetivo: Apilar y derribar para motricidad gruesa.\nMateriales: [FOTO-wooden_blocks], [VOZ-02], [FOTO-mat], [VOZ-01]\nPasos: 1. Apilar bloques en tapete. 2. Derribar con manos.\nSeguridad: No usar piezas pequeñas que quepan en la boca. Supervisar apilado en tapete antideslizante.\n## Actividad 2\nTitulo: Pelotas suaves al cesto (20 minutos)\nEdad: 18-36 meses\nObjetivo: Lanzar y atrapar para coordinación ojo-mano.\nMateriales: [FOTO-sensory_balls], [VOZ-03], [FOTO-low_shelf]\nPasos: 1. Rodar pelotas en suelo. 2. Guardar en canasta del estante.\nSeguridad: No usar piezas pequeñas que quepan en la boca. Mantener área despejada sin obstáculos.\n## Actividad 3\nTitulo: Cuentos de tela (20 minutos)\nEdad: 18-36 meses\nObjetivo: Explorar libros para lenguaje y tacto.\nMateriales: [FOTO-fabric_books], [VOZ-04], [FOTO-white_trays], [FOTO-low_shelf]\nPasos: 1. Tocar libros en bandejas. 2. Nombrar dibujos con educadora.\nSeguridad: No usar piezas pequeñas que quepan en la boca. Revisar libros sin hilos sueltos."
 }

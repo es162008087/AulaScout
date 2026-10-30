@@ -1,34 +1,35 @@
 """Llama Spark via api.meta.ai/v1: materiales -> planeacion 3 actividades SEP."""
 
 from __future__ import annotations
-
 import logging
-
 from openai import OpenAI
-
 from src.config import Settings
 
 MODEL_SPARK = "muse-spark-1.3"
 SYSTEM_PROMPT = (
-    "Eres educadora SEP experta. Responde siempre en markdown con 3 actividades."
+    "Eres educadora SEP experta maternal 18-36 meses. "
+    "Responde SIEMPRE en markdown con EXACTAMENTE 3 actividades de 20 min. "
+    "Cada actividad: Titulo, Edad 18-36 meses, Objetivo, Materiales con [ID], "
+    "Pasos numerados, Seguridad (no piezas pequeñas que quepan en boca, "
+    "supervision, area despejada). Incluye 'piezas pequeñas' en cada Seguridad. "
+    "Conciso, sin truncar, finish_reason debe ser stop."
 )
 SPARK_TIMEOUT = 60
-SPARK_MAX_TOKENS = 2500
+SPARK_MAX_TOKENS = 3500
 SPARK_RETRIES = 2
 MIN_CONTENT_LEN = 100
 
 logger = logging.getLogger(__name__)
 
-
 def build_planeacion_prompt(materials: list[str]) -> str:
     mats = ", ".join(materials) if materials else "materiales basicos de aula"
     return (
-        "Eres educadora SEP maternal. "
+        "Eres educadora SEP maternal 18-36m. "
         f"Con materiales: {mats}, genera planeación de 3 actividades "
-        "de 20 min en markdown con Título, Edad, Objetivo, Materiales, "
-        "Pasos y Seguridad."
+        "de 20 min en markdown con Titulo, Edad 18-36 meses, Objetivo, "
+        "Materiales [ID], Pasos y Seguridad (x3, menciona no piezas pequeñas). "
+        "3 actividades exactas, conciso para evitar length."
     )
-
 
 def generate_planeacion(materials: list[str], settings: Settings) -> str:
     client = OpenAI(base_url=settings.base_url, api_key=settings.api_key)
@@ -42,17 +43,13 @@ def generate_planeacion(materials: list[str], settings: Settings) -> str:
                 model=MODEL_SPARK,
                 messages=messages,
                 max_tokens=SPARK_MAX_TOKENS,
-                temperature=0.7,
+                temperature=0.0,
                 timeout=SPARK_TIMEOUT,
             )
             text = (resp.choices[0].message.content or "").strip()
             if len(text) >= MIN_CONTENT_LEN:
                 return text
-            logger.warning(
-                "Spark intento %d: respuesta corta (%d chars), reintentando",
-                attempt + 1,
-                len(text),
-            )
+            logger.warning("Spark intento %d: corta %d chars", attempt+1, len(text))
         except Exception as exc:
-            logger.warning("Spark intento %d fallo: %s", attempt + 1, exc)
-    raise ValueError(f"Spark sin respuesta util tras {SPARK_RETRIES + 1} intentos.")
+            logger.warning("Spark intento %d fallo: %s", attempt+1, exc)
+    raise ValueError(f"Spark sin respuesta util tras {SPARK_RETRIES+1} intentos.")
