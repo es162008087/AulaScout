@@ -251,3 +251,77 @@ Total SAM B: **30 cajas / 30 máscaras, decode 30/30 OK**. Los 5 overlays verifi
 **Llamadas/costo:** C1 = **27 nuevas** (21 SAM + 3 Spark + 3 Image + 0 Voice). Acumulado A+B+C1 = 48. Costo real estimado ≈$0.20 — dentro de $20 autorizado (acumulado declarado $32/$120).
 
 **Commit (rama `feature/fixes-jueces`, SIN push):** pendiente al cierre de este reporte.
+
+## 30-oct 01:10 — MUSE ETAPA C2 COMPLETA (robustez x4 escenas, n=1 por escena)
+
+**Fotos:** 4 variantes generadas con PIL desde `salon.jpg` (costo $0, sin API), 1024x765 JPEG c/u en `runs/002/C2/escena{i}/foto.jpg`:
+- escena1: original baseline (Flow validada), 136878B
+- escena2: iluminación alta cálida + zoom central 90% (ángulo distinto), 164115B
+- escena3: iluminación baja fría + rotación 4° (ángulo distinto), 144603B
+- escena4: recorte mitad derecha reescalado + contraste (encuadre distinto, énfasis estante/bandejas), 130463B
+Script: `runs/002/C2/etapa_c2.py` (reúsa `B.run_concept`/`build_spark_prompt`/`validar_planeacion` + `A.draw_overlay`). `out/` intacto.
+
+**SAM 3.1 por escena (6 conceptos EN + 1 alt max si 0, max_retries=0, n_cajas/n_máscaras, decode OK, overlay PNG por concepto con detecciones):**
+
+| Escena | mat | wooden_blocks | sensory_balls | fabric_books (+alt cloth) | low_shelf | white_trays | Total cajas/másc |
+|---|---|---|---|---|---|---|---|
+| e1 baseline | 1/1 | 20/20 | 2/2 | 0/0 (+alt 0/0) | 2/2 | 5/5 | 30/30 |
+| e2 luz alta+zoom | 1/1 | 19/19 | 2/2 | 0/0 (+alt 0/0) | 2/2 | 5/5 | 29/29 |
+| e3 luz baja+rot | 1/1 | 14/14 | 2/2 | 0/0 (+alt 0/0) | 2/2 | 5/5 | 25/25 |
+| e4 recorte der. | 1/1 | 15/15 | 6/6 | 0/0 (+alt 0/0) | 2/2 | 5/5 | 29/29 |
+
+Estables ante iluminación/ángulo: mat 1/1, low_shelf 2/2, white_trays 5/5, fabric_books 0/0 genuino en las 4. Sensibles: wooden_blocks 20→19→14→15 (luz baja y recorte pierden bloques ocluidos), sensory_balls 2→2→2→6 (el zoom del recorte e4 fragmenta la canasta en 6 detecciones). Overlay humano OK verificado en e4/sensory (canasta cubierta) y resto por pipeline idéntico a B.
+
+**Voice:** DEMO marcado, 0 llamadas (espeak-sintético, 4 mats, IDs `E{i}-VOZ-*`).
+
+**Spark 1.3 (max_tokens=3500, temp=0, prompt B + RESUMEN CORTO):** 4/4 `finish=stop` final, validador OK x4 (3 acts x20min, Seguridad x3, edad 18-36m, piezas pequeñas). 2 intentos documentados: e1-intento1 `length`/144ch (reasoning quemó el presupuesto, `spark_dump.json` en escena1) → intento2 stop/1376ch; e3-intento1 `length`/880ch (validador 2 Seguridad) → intento2 stop/1239ch. e2/e4 stop al intento1.
+- **Desvío títulos genéricos:** e1 = "Actividad 1/2/3 - 20 minutos", e4 = "Actividad 1/2/3" (modelo, temp=0; reintentar no cambiaría nada determinista). e2/e3 títulos reales ("Torres de colores", "Pelotas suaves al cesto/centro", "Cuentos de tela"). Fichas e1/e4 generadas con esos títulos genéricos — LÍMITE declarado, no re-generado para no gastar llamadas.
+
+**Image 1.0:** 4/4 con los 3 títulos de su escena, 3 paneles horizontales, sin texto largo, sin logos, sin SEP. Origen webp → PNG vía PIL. Bytes: e1 1200138 / e2 1320559 / e3 1378366 / e4 991903. Ficha e2 verificada visualmente: 3 paneles correctos.
+
+**Latencia cadena SAM+Spark+Image (n=1 por escena): e1 36.42s / e2 30.36s / e3 40.33s / e4 30.14s.** Suma C2 = 137.25s. e3 máxima por el reintento Spark + SAM 7.25s.
+
+**Archivos por `runs/002/C2/escena{i}/`:** `foto.jpg`, `etiquetas.json` (10: 6 foto + 4 voz, con campo `overlay`), `run.json` (cadena real/demo, intentos Spark, usage, costo), `overlay_<tag>.png` x5 (fabric_books sin overlay por 0 genuino), `ficha.png` + `ficha_raw.json`, `planeacion.md`, `sam_<tag>_raw.json` x6 + `sam_fabric_books_alt_raw.json`. Top-level `runs/002/C2/run.json` agrega las 4. Etiquetas/ficha/planeación/run presentes en las 4 escenas como ordenado.
+
+**Llamadas/costo:** C2 = **37 nuevas** (28 SAM + 5 Spark + 4 Image + 0 Voice). Detalle por escena: e1 9 ($0.0666) / e2 9 ($0.0666) / e3 10 ($0.0740) / e4 9 ($0.0666). Estimado real ≈$0.27 — dentro de $40 autorizados (acumulado declarado **$72/$120**). Acumulado llamadas A+B+C1+C2 = 21+27+37 = 85.
+
+**Commit (rama `feature/fixes-jueces`, SIN push):** `8918176` (75 archivos: script + 4 escenas completas + run.json top-level; PNG/JPG con force-add por `*.png` en .gitignore).
+
+## 30-oct 10:40 — MUSE ETAPA VIDEO COMPLETA (demo final voz real + mp4)
+
+**Insumos verificados:**
+- `salon.jpg` real (Flow validada, JPEG 1024x765, sin personas).
+- `nota_humana.m4a` voz real humana, AAC mono 48kHz, **13.7s — DESVÍO: supera ventana 5-7s**, se usó íntegra. Contenido verificado con negación (ver Voice).
+
+**Voice REAL (muse-voice-transcribe-1.0, WAV PCM mono 16kHz, audioEncoding "WAV", HTTP 200, 3.18s, 1 llamada):**
+- Transcripción: "Tengo tapete de foami y bloques de madera. Pero no tengo libros de tela. Tengo canasta con pelotas."
+- Afirmados → tapete de foami multicolor, bloques de madera de colores, canasta de pelotas suaves (estado real, IDs VOZ-01..03).
+- Negado → libros infantiles de tela ("no tengo..."), conservado como `VOZ-NEG-01` categoría `material_voz_negado`, n_instancias 0, sin categoría disponible (3.2).
+
+**SAM 3.1 (max_retries=0, 7 llamadas, sin fallback):** mat 1/1, wooden_blocks 20/20, sensory_balls 2/2, fabric_books 0/0 (+alt cloth books 0/0, 1 alt max), low_shelf 2/2, white_trays 5/5. **30 cajas / 30 máscaras**, decode OK, overlay PNG x5 (fabric_books sin overlay por 0 genuino).
+
+**Spark 1.3 (max_tokens=3500, temp=0):** intento1 `length`/0ch (fallo, reasoning quemó presupuesto) → intento2 `finish_reason=stop`, 2724ch, validador OK (3 acts x20min, Seguridad x3, edad 18-36m, piezas pequeñas, 0 menciones SEP). `runs/002/VIDEO/planeacion.md` + `planeacion_raw.json`.
+- **LÍMITE declarado:** act3 planifica con FOTO-fabric_books (0 cajas) pese a la negación en voz — Spark ignoró la nota de exclusión. No regenerado (temp=0 determinista).
+
+**Image 1.0:** 3 paneles con los 3 títulos extraídos, sin texto largo, sin logos, sin SEP. Origen webp → PNG vía PIL, magic verificado. `runs/002/VIDEO/ficha.png` 976966B, 16.61s.
+- **LÍMITE declarado:** títulos genéricos "Actividad 1/2/3" (modelo, temp=0; mismo desvío C2 e1/e4).
+
+**Archivos `runs/002/VIDEO/`:** `etapa_video.py`, `materiales.json` (10: 6 foto + 3 voz + 1 voz-negada), `planeacion.md`, `ficha.png`, `etiquetas.json` (10 etiquetas, foto real + voz real, nota_fusion + nota negación), `transcripcion.txt`, `run.json` (real/demo/fallo por modelo, latencia n=1), raws x7 + overlays x5, `ficha_raw.json`, `planeacion_raw.json`.
+
+**Video `out/demo_aulascout.mp4` (estado real):** foto 7s + ficha 7s, 1280x720 h264 + aac (audio nota_humana.m4a), 14.0s, 320959B, `-shortest`. Fallo inicial SAR concat (mjpeg vs png) resuelto con `setsar=1` en ambos segmentos; fix aplicado en `etapa_video.py`.
+
+**Latencia cadena n=1: 55.69s** (SAM ~9 + Voice 3.18 + Spark 12.41+11.62 + Image 16.61).
+
+**Llamadas/costo:** VIDEO = **11 nuevas** (7 SAM + 1 Voice + 2 Spark + 1 Image). Acumulado llamadas A+B+C1+C2+VIDEO = 96. Costo real ≈$0.35 — dentro de $18 autorizados (acumulado declarado **$90/$120**).
+
+**Commit (rama `feature/fixes-jueces`, SIN push):** `e48c633` (script + raws + overlays + materiales/planeación/ficha/etiquetas/run/transcripción + mp4 con force-add por `out/` y `*.png` en .gitignore).
+
+## 30-oct — CIERRE FINAL (Álvaro validó el video)
+
+**Estado:** cerrado. Video OK validado por Álvaro con ficha de 3 paneles (Actividad 1/2/3).
+**Verificado:** `out/demo_aulascout.mp4` 14.0s 320959B · `runs/002/VIDEO/ficha.png` 976966B · `runs/002/VIDEO/planeacion.md`.
+**Llamadas:** 96 según ledger (A 8 · B 14 · C1 27 · C2 37 · VIDEO 11); la suma aritmética da 97 y `runs/002/B/run.json` registra 20 en B por el reintento Spark 3500 — conciliación en `PRESUPUESTO_FINAL_90USD.md`.
+**Costo:** VIDEO ≈$0.35; suma de etapas estimadas ≈$0.92. Acumulado autorizado $90/$120, reserva $30 sin usar.
+**Latencias:** C1 p50 29.28s / p90 37.91s · VIDEO 55.69s (n=1).
+**Límites honestos:** títulos genéricos "Actividad 1/2/3"; act3 usa fabric_books (0 detecciones) pese a la negación VOZ-NEG-01; ilustraciones de la ficha genéricas.
+**Entregables:** `RESPUESTA_FINAL_A_JUECES_2026-10-30.md`, `PRESUPUESTO_FINAL_90USD.md`, `paquete_final_AULA-SCOUT_2026-10-30.zip`. Rama `feature/fixes-jueces`, sin push.
