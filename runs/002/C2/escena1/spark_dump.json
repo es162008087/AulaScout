@@ -1,0 +1,48 @@
+{
+  "tiempo_s": 9.89,
+  "dump": {
+    "id": "chatcmpl-01a18b8c-a111-7030-b3a7-24b05e922e1e",
+    "choices": [
+      {
+        "finish_reason": "length",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "## Actividad 1 (20 minutos)\n### Titulo\nTorres en tapete\n### Edad\n18-36 meses\n### Objetivo\nApilar bloques para motricidad fina.\n### Materiales\n[E",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "created": 1793342611,
+    "model": "muse-spark-1.3",
+    "object": "chat.completion",
+    "metadata": null,
+    "moderation": null,
+    "service_tier": null,
+    "system_fingerprint": null,
+    "usage": {
+      "completion_tokens": 3500,
+      "prompt_tokens": 438,
+      "total_tokens": 3938,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 3448,
+        "rejected_prediction_tokens": null,
+        "text_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cache_write_tokens": null,
+        "cached_tokens": 0,
+        "image_tokens": null,
+        "text_tokens": null
+      }
+    }
+  }
+}

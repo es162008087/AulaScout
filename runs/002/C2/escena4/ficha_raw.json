@@ -1,0 +1,18 @@
+{
+  "modelo_efectivo": "muse-image-1.0",
+  "timeout_s": 90,
+  "max_retries": 0,
+  "estado": "real",
+  "archivo": "ficha.png",
+  "formato_magic": "png",
+  "formato_origen": "webp",
+  "bytes": 991903,
+  "titulos": [
+    "Actividad 1",
+    "Actividad 2",
+    "Actividad 3"
+  ],
+  "tiempo_s": 9.98,
+  "sin_sep": true,
+  "prompt": "Ficha visual infantil para aula de maternal, estilo plano y alegre, dividida en 3 paneles horizontales, uno por actividad, cada panel con su titulo exacto y una ilustracion alusiva (sin texto largo, sin logos, sin siglas SEP, sin marcas de agua). Panel 1 titulo: 'Actividad 1'. Panel 2 titulo: 'Actividad 2'. Panel 3 titulo: 'Actividad 3'."
+}

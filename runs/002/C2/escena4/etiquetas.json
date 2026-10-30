@@ -1,0 +1,111 @@
+{
+  "etiquetas": [
+    {
+      "id": "E4-mat",
+      "categoria": "material_foto",
+      "descripcion_libre": "tapete de foami (mat)",
+      "n_instancias": 1,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": "overlay_mat.png"
+    },
+    {
+      "id": "E4-wooden_blocks",
+      "categoria": "material_foto",
+      "descripcion_libre": "bloques de madera (wooden blocks)",
+      "n_instancias": 15,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": "overlay_wooden_blocks.png"
+    },
+    {
+      "id": "E4-sensory_balls",
+      "categoria": "material_foto",
+      "descripcion_libre": "pelotas sensoriales en canasta (sensory balls in basket)",
+      "n_instancias": 6,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": "overlay_sensory_balls.png"
+    },
+    {
+      "id": "E4-fabric_books",
+      "categoria": "material_foto",
+      "descripcion_libre": "libros de tela (fabric books)",
+      "n_instancias": 0,
+      "visible_en_foto": false,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": null
+    },
+    {
+      "id": "E4-low_shelf",
+      "categoria": "material_foto",
+      "descripcion_libre": "estante bajo de madera (low wooden shelf)",
+      "n_instancias": 2,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": "overlay_low_shelf.png"
+    },
+    {
+      "id": "E4-white_trays",
+      "categoria": "material_foto",
+      "descripcion_libre": "bandejas blancas (white trays)",
+      "n_instancias": 5,
+      "visible_en_foto": true,
+      "procedencia": "foto",
+      "origen_modelo": "sam-3.1",
+      "estado": "real",
+      "overlay": "overlay_white_trays.png"
+    },
+    {
+      "id": "E4-VOZ-01",
+      "categoria": "material_voz",
+      "descripcion_libre": "tapete de foami multicolor",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "espeak-sintetico",
+      "estado": "demo"
+    },
+    {
+      "id": "E4-VOZ-02",
+      "categoria": "material_voz",
+      "descripcion_libre": "bloques de madera de colores",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "espeak-sintetico",
+      "estado": "demo"
+    },
+    {
+      "id": "E4-VOZ-03",
+      "categoria": "material_voz",
+      "descripcion_libre": "canasta de pelotas suaves",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "espeak-sintetico",
+      "estado": "demo"
+    },
+    {
+      "id": "E4-VOZ-04",
+      "categoria": "material_voz",
+      "descripcion_libre": "libros infantiles de tela",
+      "n_instancias": 1,
+      "visible_en_foto": false,
+      "procedencia": "voz",
+      "origen_modelo": "espeak-sintetico",
+      "estado": "demo"
+    }
+  ],
+  "nota_fusion": "Sin fusion foto+voz por texto: no hay IoU entre modalidades ni confirmacion de educadora; procedencias se conservan separadas."
+}

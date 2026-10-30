@@ -1,0 +1,20 @@
+{
+  "concepto": "cloth books",
+  "modelo_efectivo": "sam-3.1",
+  "max_retries": 0,
+  "estado": "real",
+  "n_cajas": 0,
+  "n_mascaras": 0,
+  "tiempo_s": 0.72,
+  "n_eventos_delta": 0,
+  "final_status": "status=completed",
+  "final_chars": 0,
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "total_tokens": 0
+  },
+  "fuente": "deltas",
+  "records": [],
+  "raw_sanitizado": ""
+}
