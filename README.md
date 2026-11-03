@@ -12,6 +12,19 @@ Foto del salón → **SAM 3.1** detecta materiales →
 Todo el consumo de modelos va por `https://api.meta.ai/v1`.
 La key vive solo en `.env` (`MODEL_API_KEY`), nunca en el repo.
 
+## Demo URL oficial
+
+**https://aulascout-demo-389771440223.us-central1.run.app** (Google Cloud Run, pública, sin Tailscale).
+
+Sube una foto del salón (sin personas) y una nota de voz de 15-20 s; corre el pipeline real
+Voice + SAM 3.1 + Spark 1.3 + Image 1.0 (~1-2 min por corrida). Demo con tope: 5 corridas/hora
+por IP y 20/día global (`Límite de demo alcanzado` al excederlo). AulaScout es planeación
+educativa, no consejo médico.
+
+Despliegue: `gcloud run deploy aulascout-demo --source . --region us-central1 --allow-unauthenticated
+--memory 1Gi --cpu 1 --timeout 300 --max-instances 1 --concurrency 1
+--set-secrets MODEL_API_KEY=MODEL_API_KEY:latest` (Dockerfile en la raíz; la key vive en Secret Manager).
+
 ## Setup
 
 ```bash

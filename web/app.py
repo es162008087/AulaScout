@@ -1,16 +1,18 @@
 """Web demo AulaScout: /api/generar corre el pipeline REAL (Voice + SAM + Spark + Image).
 
+Despliegue: Cloud Run publico (decision de Alvaro 3-nov: sin auth, solo topes).
 Protecciones (el endpoint gasta tokens de IA):
-- Solo accesible con identidad Tailscale (header inyectado por `tailscale serve`)
-  y Flask escucha solo en 127.0.0.1: no hay acceso directo por LAN.
-- Tope: 5 corridas/hora por IP y 20/dia global, contador en archivo.
-- Una corrida a la vez. MODEL_API_KEY solo vive en el servidor (.env).
+- Tope: 5 corridas/hora por IP y 20/dia global, contador en archivo
+  (en Cloud Run vive en el disco efimero: se reinicia con el contenedor;
+  desplegar con --max-instances 1 para que el tope global sea unico).
+- Una corrida a la vez. MODEL_API_KEY solo vive en el servidor (secreto/.env).
 """
 
 from __future__ import annotations
 
 import fcntl
 import json
+import os
 import threading
 import time
 import uuid
@@ -39,22 +41,15 @@ _en_curso = threading.Lock()
 
 
 def ip_cliente() -> str:
-    """IP del cliente. Tras `tailscale serve` todo llega por loopback y el proxy
-    agrega la IP real al FINAL de X-Forwarded-For (lo anterior lo puede falsear el
-    cliente, por eso se toma solo la ultima entrada)."""
+    """IP del cliente. Detras de un proxy de confianza (Cloud Run: env K_SERVICE; o
+    loopback) el proxy agrega la IP real al FINAL de X-Forwarded-For; lo anterior lo
+    puede falsear el cliente, por eso se toma solo la ultima entrada."""
     remota = request.remote_addr or "?"
-    if remota in ("127.0.0.1", "::1"):
+    if os.environ.get("K_SERVICE") or remota in ("127.0.0.1", "::1"):
         xff = request.headers.get("X-Forwarded-For", "")
         if xff:
             return xff.split(",")[-1].strip()
     return remota
-
-
-@app.before_request
-def exigir_identidad():
-    if not request.headers.get("Tailscale-User-Login"):
-        return jsonify(error="Acceso solo desde la tailnet autenticada"), 403
-    return None
 
 
 def reservar_corrida(ip: str) -> str | None:
@@ -154,4 +149,4 @@ def serve_run(p):
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, threaded=True)
+    app.run(host="127.0.0.1", port=int(os.environ.get("PORT", 5000)), threaded=True)
