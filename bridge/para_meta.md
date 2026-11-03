@@ -369,3 +369,6 @@ Línea 8 del crontab (`loop_download`) tenía `pgrep … | grep -q "[h]"` que nu
 
 ## Push 3-nov: repo https://github.com/es162008087/AulaScout público, rama feature/fixes-jueces, commit 638f2ce
 Repo creado (público, cuenta es162008087), remote `origin` = git@github.com:es162008087/AulaScout.git. `git ls-remote origin` → `638f2ce77948e9902cca3111c6dde57bba4a4b61 refs/heads/feature/fixes-jueces`. Escaneo previo: MODEL_API_KEY ausente de lo staged y del historial; `.env` ignorado. Subido: código, web/, docs/, revision_jueces/, README, .env.example, runs/002/JUECES_SIM_03NOV/ (incl. ficha.png + 5 overlays con add -f). NO subido: zip 37M, out/ (mp4), nota*.m4a, nohup.out, bridge/*.sh|txt, runs/002/B/*_raw.json. Pendiente: `main` no está en el remoto (la rama feature es hoy la default del repo); el portal puede pedir main/PR; video 3-min sigue pendiente (GAP VIDEO).
+
+## Main empujado 3-nov
+`main` (local ya existía en dacdd12, ancestro de la rama; avanzado con `--ff-only`) empujado a origin y puesto como default del repo https://github.com/es162008087/AulaScout. `git ls-remote origin`: `refs/heads/main` y `refs/heads/feature/fixes-jueces` ambos en `bc13e25f1d4765de7a9c17a11a468b5ce5dc34c9`. `gh repo view --json defaultBranchRef` → main. Pendiente: video demo de 3 min (GAP VIDEO); submit 4-nov 21:00 ET.
