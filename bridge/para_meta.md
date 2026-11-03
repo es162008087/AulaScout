@@ -372,3 +372,6 @@ Repo creado (público, cuenta es162008087), remote `origin` = git@github.com:es1
 
 ## Main empujado 3-nov
 `main` (local ya existía en dacdd12, ancestro de la rama; avanzado con `--ff-only`) empujado a origin y puesto como default del repo https://github.com/es162008087/AulaScout. `git ls-remote origin`: `refs/heads/main` y `refs/heads/feature/fixes-jueces` ambos en `bc13e25f1d4765de7a9c17a11a468b5ce5dc34c9`. `gh repo view --json defaultBranchRef` → main. Pendiente: video demo de 3 min (GAP VIDEO); submit 4-nov 21:00 ET.
+
+## Repo sync final 3-nov
+`main` y `feature/fixes-jueces` en el mismo hash en origin: `717cae2d8a8c0a7aa7a3ef3af5a612cdecbc1cec` (https://github.com/es162008087/AulaScout, público, default main). Local en `feature/fixes-jueces`. Pendiente: video demo 3 min (GAP VIDEO); submit 4-nov 21:00 ET.
