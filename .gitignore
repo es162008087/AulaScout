@@ -1,0 +1,23 @@
+# Secretos y entorno local — nunca en repo
+.env
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Salidas de demo
+out/
+*.png
+!docs/**/*.png
+
+# Editores y OS
+.vscode/
+.idea/
+.DS_Store

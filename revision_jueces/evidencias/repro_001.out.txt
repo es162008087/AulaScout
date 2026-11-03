@@ -1,0 +1,72 @@
+Voz fallo (simulado 400), usando transcripcion demo
+SAM intento 1 fallo (simulado), reintentando en 2s
+SAM intento 2 fallo (simulado), reintentando en 4s
+SAM intento 3 fallo (simulado), reintentando en 8s
+SAM fallo (simulado), probando Spark Vision
+Spark Vision fallo (simulado), usando lista fija
+SAM sin texto aprovechable, probando Spark Vision
+
+=== 1. ASR error -> transcripcion demo
+devuelve DEMO_TRANSCRIPTION: True
+tipo de retorno: str (sin flag real/degradado)
+materiales derivados: ['tapete de foami multicolor', 'bloques de madera de colores', 'canasta de pelotas suaves', 'libros infantiles de tela']
+
+=== 2a. SAM y Spark Vision fallan -> lista fija
+devuelve FALLBACK_MATERIALS: True | n = 6
+
+=== 2b. SAM vacío, Spark Vision responde -> mismo tipo de retorno (list[str])
+resultado: ['bloques', 'tapete', 'pelotas']
+modelos invocados: ['sam-3.1', 'muse-spark-1.3'] -> pipeline.py rotula todo como '[SAM]'
+
+=== 2c. SAM: se pide texto, no geometría
+SAM_PROMPT: Detecta: bloques, tapete, juguetes, materiales didácticos de maternal. Lista corta.
+parse_materials solo lee type=message/output_text; ningún acceso a boxes/masks: True
+
+=== 3. Merge: duplicados semánticos
+entradas: 16 | únicas por igualdad exacta: 16
+  familia 'tapete': 2 entradas -> ['tapete de foami encajable multicolor', 'tapete de foami multicolor']
+  familia 'bloques': 2 entradas -> ['bloques de construcción de madera de colores', 'bloques de madera de colores']
+  familia 'pelotas': 2 entradas -> ['canasta de mimbre con pelotas sensoriales de tela de colores', 'canasta de pelotas suaves']
+  familia 'libros': 2 entradas -> ['libros infantiles ilustrados y de tela', 'libros infantiles de tela']
+  familia 'estante': 2 entradas -> ['librero expositor de madera', 'estantería baja de madera con bandejas contenedoras blancas']
+  (rompecabezas aparece 1 vez en JSON actual pero con 2 nombres posibles; mesas/sillas, cojines, etc. únicos)
+
+=== 4. Extracción por keywords
+  'no tengo pelotas' -> ['canasta de pelotas suaves']
+  'no tengo bloques ni tapete, solo libros' -> ['tapete de foami multicolor', 'bloques de madera de colores', 'libros infantiles de tela']
+  'Tengo cuerdas, títeres, instrumentos musicales y pintura' -> []
+  'tengo pelotas de vinil' -> ['canasta de pelotas suaves']
+  'ya no hay libros pero sí un rompecabezas' -> ['libros infantiles de tela', 'rompecabezas de figuras geométricas']
+  nota: el audio ES el único canal que aporta lo que la foto no ve; fuera de diccionario se pierde en silencio
+
+=== 5. Retries del SDK openai (httpx.MockTransport, sin red)
+openai 3.30.0 | DEFAULT_MAX_RETRIES = 2
+excepción: APITimeoutError
+peticiones HTTP por una llamada create(timeout=30): 3
+SAM peor caso (sin red de espera por reintento): 4 intentos x 3 x 30s + backoffs 14s = 374s (Codex: 134s = sin retries SDK)
+Spark peor caso: 3 x 3 x 60s = 540s
+Image peor caso: 1 x 3 x 90s = 270s
+Voz: requests.post timeout=60s, sin retry, cualquier fallo -> demo
+(timeout de httpx es por fase de socket, no tiempo total; estos son techos teóricos, no mediciones)
+
+=== 6. Spark: finish_reason ignorado
+acepta respuesta con finish_reason='length': True | termina en: ' dibuja una carita feliz en la'
+SPARK_MAX_TOKENS = 2500 | MIN_CONTENT_LEN = 100
+
+=== 7. Ficha: qué parte del plan llega al prompt de imagen
+chars del plan: 3854 | chars enviados: 600
+'Actividad 1' en resumen: True | 'Actividad 2': False | 'Actividad 3': False
+resumen enviado -> ucción de madera de colores / bloques de madera de colores * Estantería baja de madera con bandejas contenedoras blancas
+
+=== 8. Planeación actual: validación estructural
+actividades (## Actividad): 3
+  'Campo': 0
+  'PDA': 0
+  'Aprendizaje': 0
+  'Fase 1': 0
+  'Fase 2': 0
+  'Programa': 0
+  'Seguridad': 2
+termina en: 'e corcho y dibuja una carita feliz en la'
+bloques 'Seguridad:' = 2 (esperado 3)
+edades: ['18 a 30 meses', '12 a 24 meses', '24 a 36 meses']

@@ -1,0 +1,51 @@
+{
+  "modelo_efectivo": "muse-spark-1.3",
+  "max_tokens": 3500,
+  "temperature": 0.0,
+  "timeout_s": 60,
+  "max_retries": 0,
+  "estado": "real",
+  "finish_reason": "stop",
+  "tiempo_s": 38.2,
+  "prompt_chars": 1344,
+  "respuesta_chars": 3350,
+  "validador": {
+    "n_actividades": 22,
+    "n_seguridad": 3,
+    "tiene_edad_18_36": true,
+    "tiene_piezas_pequenas": true,
+    "valido": true
+  },
+  "intentos": [
+    {
+      "intento": 1,
+      "finish_reason": "length",
+      "respuesta_chars": 1303,
+      "validador": {
+        "n_actividades": 12,
+        "n_seguridad": 1,
+        "tiene_edad_18_36": true,
+        "tiene_piezas_pequenas": true,
+        "valido": false
+      },
+      "tiempo_s": 37.69,
+      "estado": "fallo"
+    },
+    {
+      "intento": 2,
+      "finish_reason": "stop",
+      "respuesta_chars": 3350,
+      "validador": {
+        "n_actividades": 22,
+        "n_seguridad": 3,
+        "tiene_edad_18_36": true,
+        "tiene_piezas_pequenas": true,
+        "valido": true
+      },
+      "tiempo_s": 38.2,
+      "estado": "real"
+    }
+  ],
+  "prompt": "Eres educadora SEP de maternal (lactantes y maternal, 18 a 36 meses). Con estos materiales detectados en el salon:\n- [FOTO-mat] tapete de foami (procedencia: foto)\n- [FOTO-wooden_blocks] bloques de madera (procedencia: foto)\n- [FOTO-sensory_balls] pelotas sensoriales en canasta (procedencia: foto)\n- [FOTO-fabric_books] libros de tela (procedencia: foto)\n- [FOTO-low_shelf] estante bajo de madera (procedencia: foto)\n- [FOTO-white_trays] bandejas blancas (procedencia: foto)\n- [VOZ-01] canasta de pelotas suaves (procedencia: voz)\n- [VOZ-NEG-01] tapete de foami multicolor (procedencia: voz)\n- [VOZ-NEG-02] tapete de foami multicolor (procedencia: voz)\n- [VOZ-NEG-03] bloques de madera de colores (procedencia: voz)\n- [VOZ-NEG-04] libros infantiles de tela (procedencia: voz)\n\nGenera una planeacion didactica en markdown con EXACTAMENTE 3 actividades de 20 minutos cada una, para edad 18-36 meses. Cada actividad DEBE tener estas 6 secciones con estos titulos exactos: Titulo, Edad, Objetivo, Materiales, Pasos, Seguridad. En Edad escribe siempre el rango 18-36 meses. En Seguridad incluye la regla de piezas pequenas (no usar piezas pequenas que quepan en la boca) y adaptacion de seguridad propia de la actividad. Cita los materiales por su [ID] tal como aparecen arriba. Responde SOLO con la planeacion markdown, sin introduccion ni cierre.",
+  "respuesta": "# Planeación Didáctica Maternal\n## Actividad 1 - 20 minutos\n### Titulo\nDescubro las pelotas rodando\n### Edad\n18-36 meses\n### Objetivo\nEstimular la percepción táctil, el seguimiento visual y la motricidad gruesa mediante la manipulación y rodado de pelotas suaves.\n### Materiales\n- [FOTO-mat] tapete de foami\n- [FOTO-sensory_balls] pelotas sensoriales en canasta\n- [VOZ-01] canasta de pelotas suaves\n### Pasos\n1. Inicio 5 minutos: Sentar al grupo en círculo sobre el tapete y presentar la canasta con pelotas.\n2. Desarrollo 10 minutos: Invitar a cada niña y niño a tomar, apretar, rodar y lanzar suavemente las pelotas sobre el tapete, nombrar colores y texturas.\n3. Cierre 5 minutos: Guardar las pelotas en la canasta rodándolas hasta la educadora y despedirse con palmadas.\n### Seguridad\nNo usar piezas pequenas que quepan en la boca, verificar que todas las pelotas sean grandes y completas. Adaptación propia de la actividad: colocar el tapete en superficie plana antideslizante, mantener supervisión uno a uno y espacio libre de 1 metro entre infantes para evitar choques al rodar.\n## Actividad 2 - 20 minutos\n### Titulo\nConstruyo torres con bloques\n### Edad\n18-36 meses\n### Objetivo\nFavorecer la motricidad fina, la coordinación ojo-mano y la noción de apilar y derribar mediante la exploración libre de bloques de madera.\n### Materiales\n- [FOTO-mat] tapete de foami\n- [FOTO-wooden_blocks] bloques de madera\n- [FOTO-low_shelf] estante bajo de madera\n- [FOTO-white_trays] bandejas blancas\n### Pasos\n1. Inicio 5 minutos: Colocar las bandejas con 3 a 4 bloques sobre el tapete a la altura del estante bajo y mostrar cómo apilar y tirar suavemente.\n2. Desarrollo 10 minutos: Permitir apilar, alinear, golpear suavemente y derribar torres, acompañando con lenguaje: arriba, abajo, se cayó.\n3. Cierre 5 minutos: Recoger los bloques en las bandejas y colocarlas en el estante bajo con apoyo de la educadora.\n### Seguridad\nNo usar piezas pequenas que quepan en la boca, usar únicamente bloques grandes que no quepan en la boca. Adaptación propia de la actividad: revisar que los bloques estén lisos sin astillas ni puntas, trabajar sentados sobre el tapete y evitar lanzar bloques lejos del cuerpo.\n## Actividad 3 - 20 minutos\n### Titulo\nCuento con mis manos en tela\n### Edad\n18-36 meses\n### Objetivo\nPromover el lenguaje, la atención conjunta y la exploración sensorial mediante la manipulación de libros de tela.\n### Materiales\n- [FOTO-mat] tapete de foami\n- [FOTO-fabric_books] libros de tela\n- [FOTO-low_shelf] estante bajo de madera\n- [FOTO-white_trays] bandejas blancas\n### Pasos\n1. Inicio 5 minutos: Sentar al grupo sobre el tapete y presentar un libro de tela de la bandeja, saludar al personaje de la portada.\n2. Desarrollo 10 minutos: Pasar páginas de tela, tocar texturas, señalar imágenes y repetir sonidos y palabras sencillas con apoyo de la educadora.\n3. Cierre 5 minutos: Abrazar el libro, guardarlo en la bandeja y colocarlo en el estante bajo cantando canción de despedida.\n### Seguridad\nNo usar piezas pequenas que quepan en la boca, verificar que los libros no tengan botones ni piezas desprendibles que quepan en la boca. Adaptación propia de la actividad: usar libros de tela limpios y secos, mantener a los lactantes sentados o recostados sobre el tapete con supervisión constante para evitar que se lleven esquinas a la garganta."
+}

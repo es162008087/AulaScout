@@ -1,0 +1,5 @@
+Suite local sin red; plugins externos deshabilitados; dependencias existentes mediante enlaces temporales.
+.................                                                        [100%]
+17 passed in 1.17s
+
+Exit: 0

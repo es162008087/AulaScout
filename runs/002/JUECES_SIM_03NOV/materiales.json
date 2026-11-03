@@ -1,0 +1,110 @@
+[
+  {
+    "id": "FOTO-mat",
+    "concepto_en": "mat",
+    "nombre_es": "tapete de foami",
+    "n_cajas": 1,
+    "n_mascaras": 1,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "FOTO-wooden_blocks",
+    "concepto_en": "wooden blocks",
+    "nombre_es": "bloques de madera",
+    "n_cajas": 20,
+    "n_mascaras": 20,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "FOTO-sensory_balls",
+    "concepto_en": "sensory balls in basket",
+    "nombre_es": "pelotas sensoriales en canasta",
+    "n_cajas": 2,
+    "n_mascaras": 2,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "FOTO-fabric_books",
+    "concepto_en": "fabric books",
+    "nombre_es": "libros de tela",
+    "n_cajas": 0,
+    "n_mascaras": 0,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "FOTO-low_shelf",
+    "concepto_en": "low wooden shelf",
+    "nombre_es": "estante bajo de madera",
+    "n_cajas": 2,
+    "n_mascaras": 2,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "FOTO-white_trays",
+    "concepto_en": "white trays",
+    "nombre_es": "bandejas blancas",
+    "n_cajas": 5,
+    "n_mascaras": 5,
+    "procedencia": "foto",
+    "origen_modelo": "sam-3.1",
+    "estado": "real"
+  },
+  {
+    "id": "VOZ-01",
+    "concepto_en": null,
+    "nombre_es": "canasta de pelotas suaves",
+    "procedencia": "voz",
+    "origen_modelo": "muse-voice-transcribe-1.0",
+    "estado": "real"
+  },
+  {
+    "id": "VOZ-NEG-01",
+    "concepto_en": null,
+    "nombre_es": "tapete de foami multicolor",
+    "procedencia": "voz",
+    "origen_modelo": "muse-voice-transcribe-1.0",
+    "estado": "real",
+    "negacion": true,
+    "nota": "negacion en voz ('no tengo...'): conservada sin categoria, no disponible para planificar (3.2)"
+  },
+  {
+    "id": "VOZ-NEG-02",
+    "concepto_en": null,
+    "nombre_es": "tapete de foami multicolor",
+    "procedencia": "voz",
+    "origen_modelo": "muse-voice-transcribe-1.0",
+    "estado": "real",
+    "negacion": true,
+    "nota": "negacion en voz ('no tengo...'): conservada sin categoria, no disponible para planificar (3.2)"
+  },
+  {
+    "id": "VOZ-NEG-03",
+    "concepto_en": null,
+    "nombre_es": "bloques de madera de colores",
+    "procedencia": "voz",
+    "origen_modelo": "muse-voice-transcribe-1.0",
+    "estado": "real",
+    "negacion": true,
+    "nota": "negacion en voz ('no tengo...'): conservada sin categoria, no disponible para planificar (3.2)"
+  },
+  {
+    "id": "VOZ-NEG-04",
+    "concepto_en": null,
+    "nombre_es": "libros infantiles de tela",
+    "procedencia": "voz",
+    "origen_modelo": "muse-voice-transcribe-1.0",
+    "estado": "real",
+    "negacion": true,
+    "nota": "negacion en voz ('no tengo...'): conservada sin categoria, no disponible para planificar (3.2)"
+  }
+]

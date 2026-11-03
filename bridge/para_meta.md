@@ -325,3 +325,44 @@ Estables ante iluminación/ángulo: mat 1/1, low_shelf 2/2, white_trays 5/5, fab
 **Latencias:** C1 p50 29.28s / p90 37.91s · VIDEO 55.69s (n=1).
 **Límites honestos:** títulos genéricos "Actividad 1/2/3"; act3 usa fabric_books (0 detecciones) pese a la negación VOZ-NEG-01; ilustraciones de la ficha genéricas.
 **Entregables:** `RESPUESTA_FINAL_A_JUECES_2026-10-30.md`, `PRESUPUESTO_FINAL_90USD.md`, `paquete_final_AULA-SCOUT_2026-10-30.zip`. Rama `feature/fixes-jueces`, sin push.
+
+## 01-nov 05:15 — Web Tailscale activa - URL verificada por Álvaro
+- Local: http://192.168.100.7:5000 y http://127.0.0.1:5000 LISTEN 0.0.0.0:5000 pid 3612587 Flask
+- Tailscale: /usr/bin/tailscale 100.69.186.125 alvaro-thinkcentre-m910s
+- URL: https://alvaro-thinkcentre-m910s.tail7b2e6a.ts.net/ (tailnet only) proxy http://localhost:5000 - Serve started and running in background
+- Web/: app.py 2.0K templates/index.html 1.3K run.sh 61B - Flask instalado con uv add flask
+- Demo cache: out/demo_aulascout.mp4 14s 320959B, out/ficha.png 976966B 3 paneles, transcripcion.txt real "Tengo tapete de foami..."
+- HITO 29-oct 00:14 VERIFICADO sigue vigente - Voice WAV mayúscula 200 OK
+
+## 03-nov — Jueces simulados repetidos + GAP cierre + Discord #meta verificado
+
+**Cuenta (antes de gastar):** `GET /v1/models` → 200, lista `muse-spark-1.3`, `sam-3.1`, `muse-voice-transcribe-1.0`, `muse-image-1.0` (+ wonder-1.0, spark-1.1/1.2, contributors). Sin Account restricted, sin 404 model_not_found, sin 429/5xx en la corrida. Billing/Discord según verificación de Álvaro 3-nov 07:28-07:37 (balance MX$0,00, sin pago pendiente; #meta: 2 builders reportan crédito $150 desaparecido + restricted, 1 reporta Spark 1.3 404 intermitente — en nuestra cuenta no se reprodujo).
+
+**Loops:** había ~900 procesos `loop_download.sh` acumulados; eliminados por PID (solo este proyecto). Ahora 1 `loop_download.sh` (60s) + 1 `loop_upload_v2.sh` (300s). Procesos claude de pts/4 y pts/5 no tocados.
+
+**Corrida `runs/002/JUECES_SIM_03NOV/` (max_retries=0, sin fallback, `out/` sin tocar):**
+- Foto `salon_flow_validada_etapa_A_FOTO.jpg` (Drive 1PrzeRD7…, 81625B = `salon.jpg` local en tamaño; md5 Drive no disponible). Audio `nota_humana.m4a` 125369B.
+- **SAM 3.1** (7 llamadas, real): mat 1/1 c=0.6484 Box (178,450)-(646,624) **replica**; wooden_blocks 20/20; sensory_balls 2/2; fabric_books 0/0 (+alt cloth books 0/0) **replica genuino**; low_shelf 2/2; white_trays 5/5. 30 cajas/30 máscaras, 5 overlays.
+- **Voice** (real, 8.42s): "Tengo tapete de foami y bloques de madera, pero no tengo libros de tela. Tengo canasta con pelotas." (distinta a la del 29-oct: coma en vez de punto).
+- **HALLAZGO / bug de parser (no corregido):** `split_afirmado_negado` parte solo por `[.;]`; con la coma, toda la cláusula se marcó negada → tapete y bloques quedaron como `VOZ-NEG-01..03` (tapete duplicado) y solo canasta como `VOZ-01`. etiquetas.json = 11 entradas (no 10). VOZ-NEG-04 libros de tela sí correcto. La planeación no se afectó porque Spark usó los FOTO-*.
+- **Spark 1.3** (3500, temp 0): intento1 `finish=length` 1303ch (fallo) → intento2 `stop` 3350ch, validador OK (3 acts ×20min, Seguridad ×3, 18-36m, piezas pequeñas). Act3 sigue usando fabric_books pese a la negación (límite ya declarado). 37.69s + 38.2s.
+- **Image 1.0:** `ficha.png` 782619B, 3 paneles (títulos genéricos "Actividad 1/2/3"), PNG vía PIL desde webp, 18.73s.
+- **Latencia n=1: 116.83s** (vs 55.69s en VIDEO 29/30-oct; Spark y Voice más lentos hoy, SAM 1.0–2.0s por concepto).
+- **Piano 0/0 y desvío idioma ES 0 / EN 1: NO repetidos** (no están en el pipeline de esta corrida; no se gastaron llamadas extra).
+- **Llamadas: 11** (7 SAM + 1 Voice + 2 Spark + 1 Image). Acumulado ledger 96 + 11 = **107**. **Costo estimado ≈$0.35** (misma mezcla que VIDEO; la API no devuelve usage de costo). Acumulado ≈$1.27 estimado vs $90/$120 declarados.
+
+**Web + Tailscale:** Flask LISTEN 0.0.0.0:5000 (pid 2580769), `/` → 200 local y vía URL. Serve: https://alvaro-thinkcentre-m910s.tail7b2e6a.ts.net/ → localhost:5000 (y :8443 → 127.0.0.1:8787), **tailnet only**. **Funnel NO activo.** Falta habilitarlo en https://login.tailscale.com/f/funnel?node=naCvytmk4z11CNTRL. `/tmp/web.log`: último request 02-nov 07:04.
+
+### GAP VIDEO: actual 14s vs requerido 3-min demo según blast 3-nov + Discord #announcements 2-nov 20:00
+`out/demo_aulascout.mp4` verificado: 14.000s, 320959B (foto 7s + ficha 7s, audio nota_humana). Requisito: video demo de 3 min. **No se generó video nuevo** (sin autorización).
+
+### GAP push / submit (deadline 4-nov 21:00 ET)
+- `git remote -v` **vacío: no hay remote configurado**; rama `feature/fixes-jueces` sin upstream. Falta: crear/definir repo GitHub público (open source obligatorio), `git remote add`, push de la rama (+ merge/PR a main si el portal pide main). `gh` autenticado como es162008087 (verificar que sea la cuenta deseada).
+- Sin commitear: M `bridge/para_meta.md`, `pyproject.toml`, `uv.lock`; sin trackear: `web/`, `docs/`, `revision_jueces/`, `README.md`, `.gitignore`, `.env.example`, `bridge/*.sh|txt`, `runs/002/B/*_raw.json`, `runs/002/JUECES_SIM_03NOV/`, `reporte-fase-interna…md`, `nota*.m4a`, `nohup.out`, zip 37M. Sugerido NO commitear: `nohup.out`, zip, `bridge/last_task.txt`/`para_claude_pendiente.txt`/`instrucciones_meta.txt`. `.env` ignorado (OK). `*.png` y `out/` en .gitignore (overlays/ficha requieren force-add).
+- NO se hizo push.
+
+### Descripción Track Indie (90 palabras, lista para portal)
+AulaScout helps daycare and kindergarten teachers plan their day. Take one photo of the classroom and record a short voice note about what you have. SAM 3.1 detects the materials, Muse Voice transcribes the note, Muse Spark writes three age-appropriate activities for children aged 18 to 36 months with safety notes, and Muse Image creates a three-panel visual card. Built by an indie developer for real Mexican classrooms, following the national curriculum, it is educational planning support only, not medical advice. Fully open source on GitHub, using only Meta models.
+
+### 03-nov — Crontab corregido
+Línea 8 del crontab (`loop_download`) tenía `pgrep … | grep -q "[h]"` que nunca coincidía y lanzaba un loop nuevo cada 5 min (origen de ~900 procesos; 6 duplicados más entre 08:20 y 08:45, eliminados por PID). Ahora: `pgrep -f "loop_download.s[h]" >/dev/null || nohup setsid bash …/loop_download.sh …`. Línea 7 sin cambios. Backup: `/tmp/crontab.bak`. Estado: 1 `loop_download.sh` (pid 3660857) + 1 `loop_upload_v2.sh` (pid 3660858). Procesos claude de pts/4 y pts/5 no tocados.

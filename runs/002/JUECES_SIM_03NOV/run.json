@@ -1,0 +1,244 @@
+{
+  "etapa": "JUECES_SIM_03NOV",
+  "run": "002",
+  "fecha_utc": "2026-11-03T14:16:54.047250+00:00",
+  "foto": "salon_flow_validada_etapa_A_FOTO.jpg (Drive 1PrzeRD7..., 81625B = salon.jpg local, 1024x765, sin personas)",
+  "audio": "nota_humana.m4a 125369B, negacion VOZ-NEG-01",
+  "latencia_total_s_n1": 116.83,
+  "llamadas_nuevas": 11,
+  "llamadas_sam": 7,
+  "llamadas_voice": 1,
+  "llamadas_spark": 2,
+  "llamadas_image": 1,
+  "reintentos": 0,
+  "max_retries": 0,
+  "out_tocado": "ninguno",
+  "fallback_usado": false,
+  "sam_abortado_429_5xx": false,
+  "sam": {
+    "mat": {
+      "concepto": "mat",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 1,
+      "n_mascaras": 1,
+      "tiempo_s": 2.04,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 21032,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "mat_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "wooden_blocks": {
+      "concepto": "wooden blocks",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 20,
+      "n_mascaras": 20,
+      "tiempo_s": 1.14,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7174,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "wooden_blocks_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "sensory_balls": {
+      "concepto": "sensory balls in basket",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 1.76,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 7500,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "sensory_balls_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "fabric_books": {
+      "concepto": "fabric books",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 0,
+      "n_mascaras": 0,
+      "tiempo_s": 1.02,
+      "n_eventos_delta": 0,
+      "final_status": "status=completed",
+      "final_chars": 0,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "alternativa_probada": "cloth books",
+      "alternativa_resultado": "0 cajas, 0 mascaras",
+      "overlay": null,
+      "overlay_mascaras_ok": null
+    },
+    "low_shelf": {
+      "concepto": "low wooden shelf",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 2,
+      "n_mascaras": 2,
+      "tiempo_s": 1.14,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 33708,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "low_shelf_overlay.png",
+      "overlay_mascaras_ok": true
+    },
+    "white_trays": {
+      "concepto": "white trays",
+      "modelo_efectivo": "sam-3.1",
+      "max_retries": 0,
+      "estado": "real",
+      "n_cajas": 5,
+      "n_mascaras": 5,
+      "tiempo_s": 2.03,
+      "n_eventos_delta": 1,
+      "final_status": "status=completed",
+      "final_chars": 8145,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0
+      },
+      "fuente": "deltas",
+      "overlay": "white_trays_overlay.png",
+      "overlay_mascaras_ok": true
+    }
+  },
+  "voice": {
+    "modelo_efectivo": "muse-voice-transcribe-1.0",
+    "audio": "nota_humana.m4a",
+    "max_retries": 0,
+    "estado": "real",
+    "transcripcion": "Tengo tapete de foami y bloques de madera, pero no tengo libros de tela. Tengo canasta con pelotas.",
+    "tiempo_s": 8.42,
+    "llamadas": 1,
+    "materiales_presentes": [
+      "canasta de pelotas suaves"
+    ],
+    "materiales_negados": [
+      "tapete de foami multicolor",
+      "tapete de foami multicolor",
+      "bloques de madera de colores",
+      "libros infantiles de tela"
+    ]
+  },
+  "spark": {
+    "modelo_efectivo": "muse-spark-1.3",
+    "max_tokens": 3500,
+    "temperature": 0.0,
+    "timeout_s": 60,
+    "max_retries": 0,
+    "estado": "real",
+    "finish_reason": "stop",
+    "tiempo_s": 38.2,
+    "prompt_chars": 1344,
+    "respuesta_chars": 3350,
+    "validador": {
+      "n_actividades": 22,
+      "n_seguridad": 3,
+      "tiene_edad_18_36": true,
+      "tiene_piezas_pequenas": true,
+      "valido": true
+    },
+    "intentos": [
+      {
+        "intento": 1,
+        "finish_reason": "length",
+        "respuesta_chars": 1303,
+        "validador": {
+          "n_actividades": 12,
+          "n_seguridad": 1,
+          "tiene_edad_18_36": true,
+          "tiene_piezas_pequenas": true,
+          "valido": false
+        },
+        "tiempo_s": 37.69,
+        "estado": "fallo"
+      },
+      {
+        "intento": 2,
+        "finish_reason": "stop",
+        "respuesta_chars": 3350,
+        "validador": {
+          "n_actividades": 22,
+          "n_seguridad": 3,
+          "tiene_edad_18_36": true,
+          "tiene_piezas_pequenas": true,
+          "valido": true
+        },
+        "tiempo_s": 38.2,
+        "estado": "real"
+      }
+    ]
+  },
+  "image": {
+    "modelo_efectivo": "muse-image-1.0",
+    "timeout_s": 90,
+    "max_retries": 0,
+    "estado": "real",
+    "archivo": "ficha.png",
+    "formato_magic": "png (convertido desde webp con PIL)",
+    "bytes": 782619,
+    "titulos": [
+      "Actividad 1 - 20 minutos",
+      "Actividad 2 - 20 minutos",
+      "Actividad 3 - 20 minutos"
+    ],
+    "tiempo_s": 18.73
+  },
+  "desvios": [
+    "No se repitio piano (control A)."
+  ],
+  "cuenta_pre_corrida": {
+    "GET /v1/models": "200",
+    "modelos": [
+      "muse-spark-1.3",
+      "sam-3.1",
+      "muse-voice-transcribe-1.0",
+      "muse-image-1.0"
+    ],
+    "account_restricted": false
+  },
+  "hallazgos": [
+    "Voice devolvio 'Tengo tapete de foami y bloques de madera, pero no tengo libros de tela. Tengo canasta con pelotas.' (coma, no punto; distinta a la del 29-oct): split_afirmado_negado parte solo por [.;], asi que la clausula completa se marco negada -> tapete y bloques quedaron como VOZ-NEG-01..03 (tapete duplicado) en vez de afirmados; solo canasta quedo VOZ-01. Bug de parser, NO corregido.",
+    "Spark intento1 finish=length (1303ch) y intento2 stop valido (3350ch): mismo patron que 29-oct.",
+    "act3 Spark vuelve a usar FOTO-fabric_books pese a la negacion (limite ya declarado).",
+    "Piano e idioma ES no se repitieron en esta corrida (no estan en CONCEPTS).",
+    "Foto: salon.jpg local (81625B) coincide en tamano con el archivo Drive 1PrzeRD7...; md5 Drive no disponible."
+  ]
+}
