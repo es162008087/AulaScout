@@ -21,3 +21,7 @@ out/
 .vscode/
 .idea/
 .DS_Store
+
+# Web demo: corridas generadas y contador de tope
+runs/web/*/
+runs/_contador_web.json
