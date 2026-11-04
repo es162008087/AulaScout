@@ -39,13 +39,11 @@ Example 2 of the demo (see [`docs/examples/`](docs/examples/)):
 
 ![Example photo](docs/examples/example-2-shelf.jpg)
 
-> The file above is currently a **placeholder**; the real photo is added to `docs/examples/example-2-shelf.jpg`. See [`docs/examples/README.md`](docs/examples/README.md).
+**Voice note transcription** (real Muse Voice output; the scripted note was "Tengo estante bajo, bloques de madera de colores y rompecabezas de formas. No tengo tapete de foami. Son niños de 18 a 36 meses."):
 
-**Voice note transcription:**
+> Tengo estante bajo. estante bajo. Bloques de madera de colores y rompecabezas de formas. No No tengo tapete de foamy. Son niños de dieciocho a treinta y seis meses.
 
-> Tengo estante bajo, charolas blancas, libros de tela, botellas sensoriales y bloques en canastas. No tengo tapete de foamy.
-
-**Generated card** (real output of the pipeline for this voice note, produced with our own test classroom photo, not the Pexels one):
+**Generated card** (real output of the pipeline for this photo + voice note; see [`docs/examples/`](docs/examples/)):
 
 ![Example card](docs/examples/example-2-ficha.png)
 
@@ -91,6 +89,7 @@ The public demo is capped (5 runs per hour per IP, 20 per day overall) because e
 We prefer to be explicit about what does not work well yet:
 
 - **Spark sometimes ignores negations.** If the voice note says a material is *not* available (e.g. "I don't have fabric books"), the plan can still use it (we observed `fabric_books` being used in activity 3 even though the teacher said they had none). The negation is recorded in the inventory but not reliably respected by the plan.
+- **The plan can use materials that are not in the photo.** Every queried concept goes into the inventory even when SAM finds 0 instances. In example 2 the plan still lists a foam mat (`mat`: 0 detections, and the teacher said she has none), white trays, sensory balls and fabric books (all 0 detections), next to the shelf, wooden blocks and puzzles that are really there.
 - **Voice transcription can vary on the same note.** Running the same audio twice can give slightly different text (accents, punctuation, spelling such as "foami"/"foamy", occasionally garbled words).
 - **Negation parsing is simple.** The affirmed/negated split is by sentence; a comma-joined sentence ("I have X, but I don't have Y") can mark X as negated too. We observed this once.
 - **Spark can be truncated.** Spark sometimes stops by length before finishing; the pipeline retries up to 3 times and the web version uses a larger token budget.

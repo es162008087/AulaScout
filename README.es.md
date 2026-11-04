@@ -39,13 +39,11 @@ Ejemplo 2 del demo (ver [`docs/examples/`](docs/examples/)):
 
 ![Foto de ejemplo](docs/examples/example-2-shelf.jpg)
 
-> El archivo de arriba es por ahora un **placeholder**; la foto real se agrega en `docs/examples/example-2-shelf.jpg`. Ver [`docs/examples/README.md`](docs/examples/README.md).
+**Transcripción de la nota de voz** (salida real de Muse Voice; el guion era "Tengo estante bajo, bloques de madera de colores y rompecabezas de formas. No tengo tapete de foami. Son niños de 18 a 36 meses."):
 
-**Transcripción de la nota de voz:**
+> Tengo estante bajo. estante bajo. Bloques de madera de colores y rompecabezas de formas. No No tengo tapete de foamy. Son niños de dieciocho a treinta y seis meses.
 
-> Tengo estante bajo, charolas blancas, libros de tela, botellas sensoriales y bloques en canastas. No tengo tapete de foamy.
-
-**Ficha generada** (salida real del pipeline para esta nota de voz, hecha con nuestra propia foto de prueba del salón, no con la de Pexels):
+**Ficha generada** (salida real del pipeline para esta foto + nota de voz; ver [`docs/examples/`](docs/examples/)):
 
 ![Ficha de ejemplo](docs/examples/example-2-ficha.png)
 
@@ -91,6 +89,7 @@ La demo pública tiene tope (5 corridas por hora por IP, 20 por día en total) p
 Preferimos ser explícitos sobre lo que todavía no funciona bien:
 
 - **Spark a veces ignora las negaciones.** Si la nota de voz dice que un material *no* está disponible (p. ej. "no tengo libros de tela"), la planeación aún puede usarlo (observamos `fabric_books` en la actividad 3 aunque la docente dijo que no los tenía). La negación queda registrada en el inventario, pero la planeación no siempre la respeta.
+- **La planeación puede usar materiales que no están en la foto.** Todo concepto consultado entra al inventario aunque SAM encuentre 0 instancias. En el ejemplo 2 la planeación aún lista un tapete de foami (`mat`: 0 detecciones, y la docente dijo que no tiene), bandejas blancas, pelotas sensoriales y libros de tela (todos con 0 detecciones), junto al estante, los bloques de madera y los rompecabezas que sí están.
 - **La transcripción de voz puede variar con la misma nota.** Correr el mismo audio dos veces puede dar texto ligeramente distinto (acentos, puntuación, grafías como "foami"/"foamy", palabras ocasionalmente confusas).
 - **El análisis de negaciones es simple.** La separación afirmado/negado es por oración; una oración unida por coma ("tengo X, pero no tengo Y") puede marcar también X como negado. Lo observamos una vez.
 - **Spark puede truncarse.** A veces Spark se detiene por longitud antes de terminar; el pipeline reintenta hasta 3 veces y la versión web usa un presupuesto de tokens mayor.
