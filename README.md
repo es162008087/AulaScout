@@ -22,7 +22,7 @@ por IP y 20/día global (`Límite de demo alcanzado` al excederlo). AulaScout es
 educativa, no consejo médico.
 
 Despliegue: `gcloud run deploy aulascout-demo --source . --region us-central1 --allow-unauthenticated
---memory 1Gi --cpu 1 --timeout 300 --max-instances 1 --concurrency 1
+--memory 1Gi --cpu 1 --no-cpu-throttling --timeout 300 --max-instances 1 --concurrency 10
 --set-secrets MODEL_API_KEY=MODEL_API_KEY:latest` (Dockerfile en la raíz; la key vive en Secret Manager).
 
 ## Setup

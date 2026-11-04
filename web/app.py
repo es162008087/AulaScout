@@ -6,6 +6,9 @@ Protecciones (el endpoint gasta tokens de IA):
   (en Cloud Run vive en el disco efimero: se reinicia con el contenedor;
   desplegar con --max-instances 1 para que el tope global sea unico).
 - Una corrida a la vez. MODEL_API_KEY solo vive en el servidor (secreto/.env).
+- Asincrono: POST /api/generar devuelve job_id al instante y el pipeline corre en un
+  hilo; el cliente consulta GET /api/status/<job_id>. (Cloud Run: --no-cpu-throttling,
+  si no el hilo queda sin CPU tras responder el POST.)
 """
 
 from __future__ import annotations
@@ -25,9 +28,9 @@ from PIL import Image
 import pipeline
 
 BASE = Path(__file__).resolve().parents[1]
-RUNS_WEB = BASE / "runs" / "web"
+RUNS_WEB = Path(os.environ.get("RUNS_WEB", "/tmp/runs/web"))
 RUNS_WEB.mkdir(parents=True, exist_ok=True)
-CONTADOR = BASE / "runs" / "_contador_web.json"  # fuera de runs/web (no se sirve)
+CONTADOR = RUNS_WEB.parent / "_contador_web.json"  # fuera de runs/web (no se sirve)
 
 MAX_POR_HORA_IP = 5
 MAX_POR_DIA_GLOBAL = 20
@@ -41,14 +44,15 @@ _en_curso = threading.Lock()
 
 
 def ip_cliente() -> str:
-    """IP del cliente. Detras de un proxy de confianza (Cloud Run: env K_SERVICE; o
-    loopback) el proxy agrega la IP real al FINAL de X-Forwarded-For; lo anterior lo
-    puede falsear el cliente, por eso se toma solo la ultima entrada."""
+    """IP del cliente: primera entrada de X-Forwarded-For si hay proxy (Cloud Run:
+    env K_SERVICE; o loopback); si no, remote_addr. OJO: la primera entrada la puede
+    declarar el cliente, asi que el tope por IP es de mejor esfuerzo; el tope global
+    (20/dia) no depende de ella."""
     remota = request.remote_addr or "?"
     if os.environ.get("K_SERVICE") or remota in ("127.0.0.1", "::1"):
         xff = request.headers.get("X-Forwarded-For", "")
         if xff:
-            return xff.split(",")[-1].strip()
+            return xff.split(",")[0].strip()
     return remota
 
 
@@ -89,6 +93,76 @@ def _leer(p: Path, default):
     return p.read_text(encoding="utf-8") if p.exists() else default
 
 
+JOBS: dict[str, dict] = {}
+_jobs_lock = threading.Lock()
+MAX_JOBS_MEMORIA = 50
+
+
+def _guardar_status(job_id: str, job: dict) -> None:
+    d = RUNS_WEB / job_id
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "status.json").write_text(json.dumps(job, ensure_ascii=False), encoding="utf-8")
+
+
+def _set_job(jid: str, **cambios) -> None:
+    with _jobs_lock:
+        job = JOBS.setdefault(jid, {})
+        job.update(cambios)
+        snap = dict(job)
+    try:
+        _guardar_status(jid, snap)
+    except Exception:
+        app.logger.exception("no se pudo escribir status.json")
+
+
+def _describir_fallo(run: dict) -> str:
+    partes = []
+    v = run.get("voice", {})
+    if v.get("estado") != "real":
+        partes.append(f"Voice: {v.get('estado')} {v.get('error', '')}".strip())
+    caidos = [k for k, x in run.get("sam", {}).items() if x.get("estado") != "real"]
+    if caidos:
+        partes.append("SAM falló en: " + ", ".join(caidos))
+    sp = run.get("spark", {})
+    if sp.get("estado") != "real":
+        fin = [i.get("finish_reason") or i.get("error", "?") for i in sp.get("intentos", [])]
+        partes.append(f"Spark: {sp.get('error', 'fallo')} ({', '.join(map(str, fin))})")
+    im = run.get("image", {})
+    if im.get("estado") not in ("real",):
+        partes.append(f"Image: {im.get('estado')} {im.get('error', im.get('motivo', ''))}".strip())
+    return "; ".join(partes) or "El pipeline terminó con fallos"
+
+
+def _worker(job_id: str, foto_path: Path, audio_path: Path, dest: Path) -> None:
+    try:
+        run = pipeline.run_pipeline(foto_path, audio_path, dest)
+        ok = bool(run.get("ok"))
+        datos = {
+            "transcripcion": _leer(dest / "transcripcion.txt", ""),
+            "planeacion": _leer(dest / "planeacion.md", ""),
+            "materiales": json.loads(_leer(dest / "materiales.json", "[]")),
+            "latencia_s": run.get("latencia_total_s_n1"),
+            "llamadas": run.get("llamadas_nuevas"),
+            "estados": {
+                "voice": run["voice"].get("estado"),
+                "sam": {k: v.get("estado") for k, v in run["sam"].items()},
+                "spark": run["spark"].get("estado"),
+                "image": run["image"].get("estado"),
+            },
+            "ficha_url": f"/runs/{job_id}/ficha.png" if (dest / "ficha.png").exists() else None,
+        }
+        if ok:
+            _set_job(job_id, status="listo", error=None, **datos)
+        else:
+            _set_job(job_id, status="error", error=_describir_fallo(run), **datos)
+    except Exception as exc:
+        app.logger.exception("pipeline fallo")
+        _set_job(job_id, status="error",
+                 error=f"{type(exc).__name__}: {str(exc)[:300]}")
+    finally:
+        _en_curso.release()
+
+
 @app.route("/api/generar", methods=["POST"])
 def generar():
     foto = request.files.get("foto")
@@ -97,12 +171,13 @@ def generar():
         return jsonify(error="Faltan foto y/o audio"), 400
     if not _en_curso.acquire(blocking=False):
         return jsonify(error="Hay otra corrida en curso, intenta en 2 minutos"), 429
+    lanzado = False
     try:
         motivo = reservar_corrida(ip_cliente())
         if motivo:
             return jsonify(error=motivo), 429
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S_") + uuid.uuid4().hex[:6]
-        dest = RUNS_WEB / ts
+        job_id = datetime.now().strftime("%Y%m%d_%H%M%S_") + uuid.uuid4().hex[:8]
+        dest = RUNS_WEB / job_id
         dest.mkdir(parents=True, exist_ok=True)
         ext = Path(audio.filename or "").suffix.lower()
         if ext not in (".m4a", ".wav", ".mp3", ".aac", ".mp4", ".ogg"):
@@ -116,31 +191,35 @@ def generar():
             img.save(foto_path, "JPEG", quality=90)
         except Exception:
             return jsonify(error="La foto no es una imagen válida (usa JPG/PNG)"), 400
-        try:
-            run = pipeline.run_pipeline(foto_path, audio_path, dest)
-        except Exception as exc:  # no filtrar detalles internos al cliente
-            app.logger.exception("pipeline fallo")
-            return jsonify(error="Falló el pipeline", tipo=type(exc).__name__), 500
-        ok = bool(run.get("ok"))
-        resp = {
-            "ok": ok,
-            "id": ts,
-            "latencia_s": run.get("latencia_total_s_n1"),
-            "llamadas": run.get("llamadas_nuevas"),
-            "estados": {
-                "voice": run["voice"].get("estado"),
-                "sam": {k: v.get("estado") for k, v in run["sam"].items()},
-                "spark": run["spark"].get("estado"),
-                "image": run["image"].get("estado"),
-            },
-            "transcripcion": _leer(dest / "transcripcion.txt", ""),
-            "planeacion": _leer(dest / "planeacion.md", ""),
-            "materiales": json.loads(_leer(dest / "materiales.json", "[]")),
-            "archivos": {n: f"/runs/{ts}/{n}" for n in ARCHIVOS_RUN if (dest / n).exists()},
-        }
-        return jsonify(resp), (200 if ok else 502)
+        with _jobs_lock:
+            while len(JOBS) >= MAX_JOBS_MEMORIA:
+                JOBS.pop(next(iter(JOBS)))
+        _set_job(job_id, job_id=job_id, status="generando", error=None,
+                 inicio=time.time())
+        threading.Thread(target=_worker, args=(job_id, foto_path, audio_path, dest),
+                         daemon=True).start()
+        lanzado = True
+        return jsonify(job_id=job_id, status="generando"), 202
     finally:
-        _en_curso.release()
+        if not lanzado:
+            _en_curso.release()
+
+
+@app.route("/api/status/<job_id>")
+def status(job_id: str):
+    with _jobs_lock:
+        job = JOBS.get(job_id)
+        job = dict(job) if job else None
+    if job is None:
+        return jsonify(status="error",
+                       error="Trabajo no encontrado (el servidor pudo reiniciarse); vuelve a generar"), 404
+    job.setdefault("error", None)
+    if job["status"] == "generando":
+        job["transcurrido_s"] = round(time.time() - job.get("inicio", time.time()))
+        return jsonify(status="generando", transcurrido_s=job["transcurrido_s"])
+    return jsonify({k: job.get(k) for k in (
+        "status", "error", "transcripcion", "planeacion", "materiales", "ficha_url",
+        "latencia_s", "llamadas", "estados")})
 
 
 @app.route("/runs/<path:p>")

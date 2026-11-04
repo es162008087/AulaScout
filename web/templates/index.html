@@ -1,38 +1,63 @@
-<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AulaScout - Demo Jueces</title>
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AulaScout - Demo</title>
 <style>
-body{font-family:system-ui;max-width:900px;margin:20px auto;padding:20px}
+body{font-family:system-ui;max-width:900px;margin:20px auto;padding:20px;font-size:19px;line-height:1.4}
+h1{font-size:34px}
 .drop{border:2px dashed #888;padding:20px;text-align:center}
-img{max-width:100%} pre{background:#f5f5f5;padding:10px;overflow:auto;white-space:pre-wrap}
+input[type=file]{font-size:19px;max-width:100%}
+img{max-width:100%} pre{background:#f5f5f5;padding:10px;overflow:auto;white-space:pre-wrap;font-size:17px}
+button{min-height:48px;font-size:19px;padding:14px 18px}
 button:disabled{opacity:.5}
 .spin{display:none;margin-top:14px} .spin.on{display:block}
 .spin i{display:inline-block;width:18px;height:18px;border:3px solid #ccc;border-top-color:#333;border-radius:50%;animation:r 1s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes r{to{transform:rotate(360deg)}}
 .err{color:#b00020;font-weight:600}
 </style>
-<h1>AulaScout - Demo Jueces</h1>
+<h1>AulaScout - Demo</h1>
 <p>Sube foto del salón (sin personas) + audio 15-20s. Pipeline real: Voice + SAM + Spark + Image.</p>
 <div class="drop"><input type="file" id="foto" accept="image/*"> Foto<br><br><input type="file" id="audio" accept=".m4a,.wav,.mp3,audio/*"> Audio m4a/wav<br><br><button id="btn" onclick="generar()">Generar planeación</button>
-<div class="spin" id="spin"><i></i>Generando, tarda ~2 minutos, pipeline real</div></div>
+<div class="spin" id="spin"><i></i><span id="msg">Generando, tarda ~2 minutos, no cierres</span></div></div>
 <div id="out"></div>
 <script>
+const $=id=>document.getElementById(id);
 function el(tag,txt,cls){const e=document.createElement(tag);if(txt!==undefined)e.textContent=txt;if(cls)e.className=cls;return e}
+function busy(on,msg){$('btn').disabled=on;$('spin').classList.toggle('on',on);if(msg)$('msg').textContent=msg}
+function fail(m){$('out').replaceChildren(el('p',m,'err'));busy(false);localStorage.removeItem('job_id')}
 async function generar(){
- const out=document.getElementById('out'),btn=document.getElementById('btn'),spin=document.getElementById('spin');
- const f=document.getElementById('foto').files[0],a=document.getElementById('audio').files[0];
- out.replaceChildren();
- if(!f||!a){out.append(el('p','Elige foto y audio','err'));return}
- btn.disabled=true;spin.classList.add('on');
+ const f=$('foto').files[0],a=$('audio').files[0];
+ $('out').replaceChildren();
+ if(!f||!a){$('out').append(el('p','Elige foto y audio','err'));return}
+ busy(true,'Subiendo foto y audio...');
  try{
   const fd=new FormData();fd.append('foto',f);fd.append('audio',a);
   const r=await fetch('/api/generar',{method:'POST',body:fd});
   let j={};try{j=await r.json()}catch(e){}
-  if(!r.ok&&!j.transcripcion){out.append(el('p',j.error||('Error '+r.status),'err'));return}
-  if(!j.ok)out.append(el('p','El pipeline terminó con fallos (ver estados)','err'));
-  out.append(el('h3','Transcripción'),el('pre',j.transcripcion));
-  out.append(el('h3','Run'),el('pre',JSON.stringify({latencia_s:j.latencia_s,llamadas:j.llamadas,estados:j.estados},null,2)));
-  out.append(el('h3','Planeación'),el('pre',j.planeacion));
-  if(j.archivos&&j.archivos['ficha.png']){out.append(el('h3','Ficha'));const im=el('img');im.src=j.archivos['ficha.png'];out.append(im)}
- }catch(e){out.append(el('p','Error de red: '+e.message,'err'))}
- finally{btn.disabled=false;spin.classList.remove('on')}
+  if(!r.ok||!j.job_id){fail(j.error||('Error '+r.status));return}
+  localStorage.setItem('job_id',j.job_id);
+  busy(true,'Generando, tarda ~2 minutos, no cierres');
+  poll(j.job_id,0);
+ }catch(e){fail('Error de red al subir: '+e.message)}
 }
+async function poll(id,fallos){
+ try{
+  const r=await fetch('/api/status/'+id,{cache:'no-store'});
+  const j=await r.json();
+  if(j.status==='generando'){
+   busy(true,'Generando, tarda ~2 minutos, no cierres ('+(j.transcurrido_s||0)+' s)');
+   setTimeout(()=>poll(id,0),5000);return}
+  mostrar(j);
+ }catch(e){
+  if(fallos>=11){fail('Se perdió la conexión con el servidor: '+e.message);return}
+  setTimeout(()=>poll(id,fallos+1),5000);
+ }
+}
+function mostrar(j){
+ const out=$('out');out.replaceChildren();busy(false);localStorage.removeItem('job_id');
+ if(j.status==='error')out.append(el('p','Error: '+(j.error||'desconocido'),'err'));
+ if(j.transcripcion)out.append(el('h3','Transcripción'),el('pre',j.transcripcion));
+ if(j.estados)out.append(el('h3','Run'),el('pre',JSON.stringify({latencia_s:j.latencia_s,llamadas:j.llamadas,estados:j.estados},null,2)));
+ if(j.planeacion)out.append(el('h3','Planeación'),el('pre',j.planeacion));
+ if(j.ficha_url){out.append(el('h3','Ficha'));const im=el('img');im.src=j.ficha_url;out.append(im)}
+}
+const pend=localStorage.getItem('job_id');
+if(pend){busy(true,'Retomando corrida en curso...');poll(pend,0)}
 </script></html>

@@ -11,4 +11,4 @@ COPY runs/002/B/etapa_b.py runs/002/B/etapa_b.py
 COPY web/ web/
 ENV PYTHONUNBUFFERED=1
 # MODEL_API_KEY llega como secreto de Cloud Run (nunca en la imagen ni en el repo)
-CMD exec gunicorn --chdir web app:app --bind 0.0.0.0:${PORT:-8080} --timeout 300 --workers 1 --threads 4
+CMD exec gunicorn --chdir web app:app --bind 0.0.0.0:${PORT:-8080} --timeout 300 --workers 1 --threads 8
